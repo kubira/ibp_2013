@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".RecordMenuActivity" >
+
+    <Button
+        android:id="@+id/pridej"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onPridej"
+        android:text="@string/add_cost" />
+    <Button
+        android:id="@+id/filtr"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pridej"
+        android:onClick="onFiltr"
+        android:text="@string/costs_filter" />
+    <Button
+        android:id="@+id/sprava"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filtr"
+        android:onClick="onManage"
+        android:text="@string/costs_options_managing" />
+    <Button
+        android:id="@+id/possibilities"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sprava"
+        android:onClick="onPossibilities"
+        android:text="Možnosti" />
+
+</RelativeLayout>

@@ -1,0 +1,1741 @@
+%===============================================================================
+% (c) Radim Kubi¹, 2013
+%===============================================================================
+
+%===============================================================================
+\chapter{Úvod}
+%===============================================================================
+Pohyb je pøirozená èinnost èlovìka a~lidé od nepamìti cestují, jak po
+nejbli¾¹ím okolí svého bydli¹tì, tak i~do vzdálených koutù celého svìta.
+V~dne¹ní dobì, díky existenci moderních dopravních prostøedkù a~rùzných forem
+pøepravy, bereme cestování jako samozøejmost a~cestujeme v~podstatì ka¾dý den.
+Mnoho lidí dojí¾dí dennì do zamìstnání nebo do ¹kol, nìkteøí z~nich jezdí na
+slu¾ební cesty, ale snad vìt¹ina z~nás vyu¾ívá po celý rok svùj volný èas
+k~nav¹tìvování zajímavých míst, jak v~na¹í vlasti, tak i~v~zahranièí.
+
+Cesty do neznámých lokalit s~sebou èasto nesou problémy s~nalezením slu¾eb,
+které by uspokojily potøeby cestovatelù, v~okolí nav¹tíveného místa. Ka¾dý, kdo
+cestuje do zahranièí, kde se platí jinou mìnou ne¾ jeho vlastní, se zajímá
+o~pomìr své domácí mìny ku mìnì cílové zemì. V~souvislosti s~tím sleduje,
+jak velkou èástku za jednotlivé vìci pøi takové cestì utratil v~pøepoètu na mìnu
+domácí. Pokud nìkdo cestuje do státu s~odli¹nou øeèí, mù¾e mít problém
+s~dorozumìním se a~èasto pou¾ívá posunky nebo s~sebou nosí slovník.
+Dal¹í vìcí, kterou èlovìk èasto pøi cestování dìlá, je komunikace
+na dálku s~blízkými osobami a~pøáteli. V~souèasnosti lidé komunikují na velké
+vzdálenosti pøedev¹ím elektronicky a~vyu¾ívají k~tomu rùzné internetové
+prostøedky, dnes hlavnì takzvané sociální sítì.
+
+Cílem této práce je navrhnout a~implementovat aplikaci, která by usnadnila
+øe¹it vý¹e zmínìné problémy u¾ivatelù. Mìla by tedy umo¾òovat vyhledání
+nejbli¾¹ích poskytovaných slu¾eb, napø. hotely, restaurace a~èerpací stanice,
+poskytovat informace o~kurzech jednotlivých mìn a~obsahovat správu cestovních
+výdajù v~kategoriích definovaných u¾ivatelem. Dále by aplikace mìla poskytovat
+pøístup ke slovníkùm rùzných jazykù a~umo¾nit komunikaci s~dal¹ími osobami.
+Aplikace bude zacílena na u¾ivatele mobilních zaøízení s~dnes velmi populárním
+a~roz¹íøeným operaèním systémem Android.
+
+Kapitola \ref{technologie} popisuje cílový operaèní systém Android a~globální
+navigaèní satelitní systém GPS vyu¾ívaný aplikací pro zji¹tìní aktuální
+zemìpisné polohy u¾ivatele, dle které bude aplikace vyhledávat slu¾by v~okolí
+a~automaticky nastavovat volby nìkterých funkcí. Kapitoly \ref{analyza}
+a~\ref{specifikace} rozebírají po¾adavky na jednotlivé funkce dostupné u¾ivateli
+v~implementované aplikaci. Poslední teoretická kapitola \ref{navrh} popisuje
+mo¾nosti øe¹ení funkcí aplikace a~uvádí dostupné zdroje pro získávání
+prezentovaných informací. Následující kapitola \ref{implementace} obsahuje
+implementaèní detaily, \ref{testovani}. kapitola prezentuje zpùsob testování,
+které je nedílnou a~dùle¾itou souèástí vývoje ka¾dé aplikace. Poslední kapitola
+\ref{zaver} hodnotí dosa¾ené výsledky a~popisuje mo¾nosti dal¹ího vývoje
+projektu.
+
+%===============================================================================
+\chapter{Pou¾ité technologie}
+\label{technologie}
+%===============================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Platforma Android}
+
+Android zahrnuje operaèní systém, middleware\footnote{Middleware pøedstavuje
+software poskytující slu¾by aplikacím nad~rámec slu¾eb dostupných pøímo
+z~operaèního systému \cite{TechTerms}.} a~základní aplikace \cite{Architektura}.
+Je~urèený pøedev¹ím pro~mobilní zaøízení, jako jsou chytré mobilní telefony,
+tablety a~navigace. Poslední dobou se~ro¾¹íøil pøedev¹ím do~malých
+multimediálních pøehrávaèù, ze~kterých je~mo¾né pøistupovat k~internetu, a~mini
+poèítaèù s~nízkou spotøebou. Zaèínají se~pomalu objevovat návrhy na~vyu¾ití
+Androidu v~domácích spotøebièích (lednièky, praèky, mikrovlnné
+trouby) \cite{Samsung} a~v~palubních deskách automobilù \cite{Saab}.
+
+%---------------------------------------
+\subsection{Historie}
+
+V~øíjnu 2003 byla v~Kalifornii zalo¾ena firma Android Inc., která nebyla pøíli¹
+známá. Google Inc.\footnote{\url{http://www.google.com/about/company/}.}
+ji v~srpnu 2005 odkoupil a~udìlal z~ní svoji dceøinou spoleènost.
+
+
+Tým Googlu, vedený jedním z~pùvodních zakladatelù firmy Android Inc., vyvinul
+platformu postavenou na linuxovém jádru a~získal nìkolik patentù v~oblasti
+mobilních technologií v~záøí 2007. Odborná veøejnost oèekávala, ¾e~Google chce
+vstoupit na~trh chytrých mobilních telefonù a~vydá jejich vlastní mobilní
+telefon.
+
+
+5. listopadu 2007 vzniklo konsorcium spoleèností vyrábìjících mobilní
+telefony, èipy nebo mobilní aplikace (napø. Google, HTC, Intel, LG, Motorola,
+NVIDIA, Qualcomm, Samsung, Texas Instruments), nazvané Open Handset
+Alliance\footnote{\url{http://www.openhandsetalliance.com/}.},
+aby~vyvinulo otevøený standard mobilních zaøízení. Ve~stejný den ohlásilo
+svùj první produkt, Android, a~po~týdnu vydalo první Android
+SDK\footnote{Zkratka z~anglického Software Development Kit, je~to~soubor
+softwarových nástrojù, knihoven a~vìt¹inou i~pøíkladù a~návodù k~vývoji aplikací
+pro~specifické zaøízení, operaèní systém nebo~programovací
+jazyk \cite{TechTerms}.} s~open source licencí pro~vývojáøe \cite{OHA}.
+
+
+První komerèní telefon s~Androidem, vyrobený spoleèností HTC, byl v~USA uveden
+v~øíjnu 2008, do~Èeské republiky se~dostal v~lednu 2009, a~bylo uvolnìno
+SDK~1.0. V~roce 2009 vyu¾ívalo systém Android u¾~více ne¾ 20 zaøízení. Koncem
+roku 2010 se~Android stal vedoucí mobilní platformou.
+
+%---------------------------------------
+\subsection{Verze systému}
+
+Existuje ji¾ více ne¾ deset verzí Androidu. Ka¾dá jeho verze byla uvolnìna
+v~nìkolika vydáních, která vìt¹inou opravují drobné chyby, nedostatky
+a~pøidávají malá vylep¹ení oproti tìm pøedchozím. Seznam verzí s~jejich hlavními
+rozdíly a~daty prvních vydání je k~dispozici v~pøíloze \ref{verze}.
+
+Od Androidu 1.5, uvolnìného 30. dubna 2009, nesou jednotlivé verze systému
+oficiální kódová jména, inspirovaná anglickými názvy zákuskù a~sladkostí. Tato
+jména jdou abecednì za~sebou, nejnovìj¹í známou verzí je~4.2~Jelly
+Bean \cite{AndroidDashboards}.
+
+%---------------------------------------
+\subsection{Roz¹íøenost}
+
+Systém se~stává mezi u¾ivateli chytrých mobilních zaøízení èím dál oblíbenìj¹ím,
+pøedev¹ím díky jeho otevøenosti a~tomu, ¾e~je~zalo¾en na~Linuxu. Ka¾dý si~mù¾e
+své~zaøízení po~softwarové stránce libovolnì upravit a~pøizpùsobit k~obrazu
+svému. V~souèasnosti zabírá Android na~trhu mobilních operaèních systémù více
+ne¾ ètvrtinový podíl ze~v¹ech pou¾ívaných zaøízení, a~dostal se~tak na~druhé
+místo mezi pou¾ívanými systémy \cite{NetMarketShare}. Pomìr s~dal¹ími systémy
+lze vidìt v~grafu \ref{fig:os_distribution}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.75]{fig/os_distribution.eps}
+  \caption{Podíl pou¾ívaných mobilních operaèních
+systémù \cite{NetMarketShare}.}
+  \label{fig:os_distribution}
+\end{figure}
+
+Na~zaøízeních u¾ivatelù s~Androidem se~po~celém svìtì mù¾e vyskytovat i~více ne¾
+deset rùzných verzí nebo~vydání tohoto systému. Pøi~vytváøení aplikace je~nutné
+zvolit její nejni¾¹í podporovanou verzi API\footnote{Zkratka z~anglického
+Application Programming Interface, jedná se~o~pøeddefinovanou sadu pøíkazù,
+funkcí a~protokolù, které~lze vyu¾ít pøi~vytváøení aplikace pro~specifický
+operaèní systém, aby~je programátor nemusel psát celé
+od~zaèátku \cite{TechTerms}.} a~tím poèet u¾ivatelù, kteøí si~budou moct tuto
+aplikaci nainstalovat a~pou¾ívat ji, ale~také funkèní mo¾nosti samotné aplikace. 
+
+
+Graf \ref{fig:android_distribution} zobrazuje roz¹íøenost jednotlivých verzí
+systému podle kódových jmen mezi u¾ivateli a~tabulka
+\ref{tab:android_distribution} jejich verzi API. Momentálnì by~bylo vhodné
+zvolit API~10 (94,4~\%), popøípadì star¹í verzi API~8 (98,2~\%), pro~maximální
+pokrytí poètu u¾ivatelù.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.75]{fig/android_distribution.eps}
+  \caption{Podíl pou¾ívaných verzí systému Android \cite{AndroidDashboards}.}
+  \label{fig:android_distribution}
+\end{figure}
+
+\begin{table}[htbp]
+\catcode`\-=12
+\centering
+\begin{tabular}{|c|l|rrl|r@{,}l|}
+\hline
+{\bf Verze} & \multicolumn{1}{|c|}{\bf Kódové jméno} &
+  \multicolumn{3}{|c|}{\bf API} & \multicolumn{2}{|c|}{\bf Podíl} \\
+\hline
+\hline
+1.6 & Donut & & 4 & & 0 & 1\,\% \\
+\hline
+2.1 & Eclair & & 7 & & 1 & 7\,\% \\
+\hline
+2.2 & Froyo & & 8 & & 3 & 7\,\% \\
+\hline
+2.3 - 2.3.2 & \multirow{2}{*}{Gingerbread} & & 9 & & 0 & 1\,\% \\
+\cline{1-1}\cline{3-7}
+2.3.3 - 2.3.7 & & & 10 & & 38 & 4\,\% \\
+\hline
+3.2 & Honeycomb & & 13 & & 0 & 1\,\% \\
+\hline
+4.0.3 - 4.0.4 & Ice Cream Sandwich & & 15 & & 27 & 5\,\% \\
+\hline
+4.1.x & \multirow{2}{*}{Jelly Bean} & & 16 & & 26 & 1\,\% \\
+\cline{1-1}\cline{3-7}
+4.2.x & & & 17 & & 2 & 3\,\% \\
+\hline
+\end{tabular}
+\caption{Podíl pou¾ívaných verzí systému Android a~verze jejich
+API \cite{AndroidDashboards}.}
+\label{tab:android_distribution}
+\end{table}
+
+%---------------------------------------
+\subsection{Architektura}
+
+Na~obrázku \ref{fig:android_architecture} lze~vidìt, ¾e~architektura systému
+Android je~slo¾ena z~pìti vrstev. Jednotlivé vrstvy slou¾í k~rùzným úèelùm
+a~jsou popsány dále.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.3]{fig/android_architecture.eps}
+  \caption{Vrstvy architektury systému Android \cite{Architektura}.}
+  \label{fig:android_architecture}
+\end{figure}
+
+\subsection*{Linuxové jádro}
+
+Nejni¾¹í vrstva architektury je~zalo¾ena na~linuxovém monolitickém
+jádru. Jádra vyu¾ívá pro~systémové slu¾by, jako jsou zabezpeèení, správa pamìti,
+procesù a~sítì, a~pou¾ívá také jeho vestavìné ovladaèe. Tato vrstva vytváøí
+abstrakci hardwaru zaøízení pro~vy¹¹í softwarové vrstvy systému
+\cite{Architektura}.
+
+\subsection*{Knihovny}
+
+Rùzné komponenty systému vyu¾ívají øadu C/C++ knihoven, které systém obsahuje.
+Jsou to napøíklad:
+
+\begin{itemize}
+\item{\bf Systémová knihovna jazyka C:} Implementace standardní systémové
+knihovny jazyka C odvozená od~její BSD\footnote{Zkratka anglického Berkeley
+Software Distribution pro odvozeninu systému Unix, ¹íøeného Kalifornskou
+univerzitou v~Berkeley.} verze a~vyladìná pro vestavìná zaøízení.
+
+\item{\bf Knihovny médií:} Knihovny pro~pøehrávání a~záznam mnoha audio
+a~video formátù, vèetnì obrázkù.
+
+\item{\bf Mana¾er plochy:} Spravuje pøístup k~subsystému zobrazení
+a~zaji¹»uje jeho plynulé sestavení z~2D a~3D grafických vrstev více aplikací.
+
+\item{\bf LibWebCore:} Moderní knihovna pro~zobrazování webových stránek.
+
+\item{\bf SGL:} Knihovna základního 2D zobrazení.
+
+\item{\bf 3D knihovny:} Implementace OpenGL ES\footnote{Zkratka z~anglického
+Open Graphics Library for Embedded Systems. OpenGL je 3D grafický jazyk
+nezávislý na~platformì a~hardwaru, který~tento jazyk podporuje \cite{TechTerms}.
+OpenGL ES verze je urèena pro~vestavìné systémy. \url{http://www.opengl.org/}.}
+API pro~vykreslování 3D hardwarovì nebo softwarovì akcelerované grafiky.
+
+\item{\bf FreeType:} Zobrazení rastrových a~vektorových fontù.
+
+\item{\bf SQLite:} Odlehèená, ale~výkonná knihovna relaèní databáze.
+\end{itemize}
+
+Funkce knihoven jsou k~dispozici vývojáøùm pøes aplikaèní
+framework\footnote{Framework je softwarová struktura slou¾ící jako podpora
+pøi~programování, vývoji a~organizaci jiných softwarových projektù. Mù¾e
+obsahovat podpùrné programy, API, podporu pro~návrhové vzory nebo~doporuèené
+postupy pøi~vývoji.} \cite{Architektura}.
+
+\subsection*{Bìhové prostøedí}
+
+Tato vrstva obsahuje základní knihovny jazyka Java a~virtuální stroj Dalvik.
+
+Ka¾dá aplikace bì¾í ve~svém vlastním procesu s~vlastní instancí virtuálního
+stroje Dalvik, který byl vytvoøen pro~efektivní bìh více aplikací souèasnì.
+Dalvik vykonává programy v~.dex formátu, optimalizované na~minimální pamì»ové
+nároky. Tento registrovì orientovaný virtuální stroj spou¹tí tøídy jazyka Java
+pøekompilované pøilo¾eným nástrojem z~byte kódu do~.dex formátu.
+
+Virtuální stroj Dalvik vyu¾ívá systémové jádro ke~správì bì¾ících vláken
+a~pro~nízkoúrovòový pøístup do~pamìti \cite{Architektura}.
+
+\subsection*{Aplikaèní framework}
+
+Poskytnutí otevøené vyvojáøské platformy Android dává vývojáøùm mo¾nost vytváøet
+rozmanité a~inovativní aplikace. Lze libovolnì vyu¾ít pøednosti hardwaru
+zaøízení, pøistupovat k~informacím o~umístìní, nechat bì¾et slu¾by na~pozadí,
+nastavovat upomínky a~výstrahy do~stavové li¹ty a~je¹tì mnohem více.
+
+
+Vytvoøené aplikace mohou plnì pøistupovat k~prostøedkùm stejnì jako aplikace
+systémové. Architektura aplikací byla navr¾ena pro jednoduché znovupou¾ití
+existujících komponent, které mù¾e dát k~dispozici ostatním aplikacím a~stejnì
+tak mù¾e vyu¾ívat komponenty jiných aplikací (v~závislosti na~uplatnìných
+bezpeènostních omezeních). Jednotlivé komponenty mohou být nahrazeny
+i~u¾ivatelem.
+
+
+Základem pro~v¹echny aplikace je~øada slu¾eb a~systémù:
+
+\begin{itemize}
+\item Rozmanitá roz¹iøitelná sada pohledù zahrnující seznamy, møí¾ky, textová
+pole, tlaèítka a~vlo¾ené webové prohlí¾eèe.
+
+\item Poskytovatelé obsahu umo¾òující pøístup k~datùm ostatních aplikací
+a~sdílení dat vlastních.
+
+\item Správce zdrojù poskytující pøístup k~neprogramovým prostøedkùm, napø.
+lokalizovaným øetìzcùm, grafice nebo~souborùm vzhledu.
+
+\item Správce oznámení pro~pøístup aplikací k~zobrazení výstrah ve~stavové
+li¹tì.
+
+\item Správce aktivit, který øídí ¾ivotní cyklus aplikací \cite{Architektura}.
+\end{itemize}
+
+\subsection*{Aplikace}
+
+Nejvy¹¹í vrstva zahrnuje u¾ivatelské aplikace. U¾ v~základu jich systém nìkolik
+obsahuje, napø. e-mailového klienta, kalendáø, webový a~mapový prohlí¾eè,
+správce kontaktù. Doinstalovat v¹ak lze mnoho dal¹ích aplikací pøímo z~Google
+Play\footnote{Google Play je online distribuèní slu¾ba poskytující digitální
+obsah Android zaøízením,\newline\url{https://play.google.com/}.} nebo pøidat
+i~aplikace tøetích stran. Ve¹keré aplikace jsou psány v~programovacím jazyce
+Java \cite{Architektura}.
+
+%---------------------------------------
+\subsection{Komponenty aplikace a~jejich ¾ivotní cykly}
+
+V~systému Android existují 4~základní stavební prvky aplikací, které
+reprezentují u¾ivatelské rozhraní, slu¾by bì¾ící na~pozadí, rozhraní pro~pøístup
+k~datùm nebo~pro~pøíjem oznámení.
+
+\subsection*{Aktivity}
+
+Tyto komponenty poskytují obrazovky u¾ivatelského rozhraní pro~interakci
+s~u¾ivatelem. Ka¾dá aktivita má své~vlastní okno, které~zpravidla vyplòuje
+celý displej, ale~mù¾e být i~men¹ího rozmìru a~zobrazovat se~nad~ostatními
+okny.
+
+
+Aplikace se~obvykle skládá z~nìkolika vzájemnì provázaných aktivit. Vìt¹inou
+je~jedna hlavní, zobrazí se~pøi spu¹tìní aplikace, a~lze z~ní pøistupovat
+a~spou¹tìt aktivity dal¹í. V¾dy, kdy¾ je~aktivita spu¹tìna, pøedchozí aktivitu
+systém pozastaví, ale~zachová ji v~zásobníku. Novì spu¹tìná aktivita je~ulo¾ena
+na~vrchol zásobníku a~zabírá si~obrazovku k~interakci s~u¾ivatelem. Pøi stisku
+tlaèítka pro~návrat u¾ivatelem se~odebere aktivita z~vrcholu zásobníku, zanikne
+a~obnoví se~aktivita pøedchozí. Tento princip je~zobrazen
+na~diagramu~\ref{fig:backstack}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.25]{fig/backstack.eps}
+  \caption{Princip zásobníku aktivit v~systému Android \cite{Zasobnik}.}
+  \label{fig:backstack}
+\end{figure}
+
+V¹echny aktivity obsahují nìkolik funkcí, které jsou~spou¹tìny pøi~zmìnì jejich
+stavu. Pokud je~aktivita pozastavena, mù¾e napøíklad uvolnit nìkteré zdroje
+nebo~velké objekty a~po~jejím obnovení si~tyto prostøedky opìt zabrat. Systém
+má také mo¾nost aktivitu ukonèit, pokud není dostatek pamìti pro~aplikaci
+vy¹¹í priority. ®ivotní cyklus aktivit zobrazuje
+diagram~\ref{fig:activity_lifecycle}~\cite{ActivityCycle}\cite{Android2}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.3]{fig/activity_lifecycle.eps}
+  \caption{®ivotní cyklus aktivit v~systému Android \cite{ActivityCycle}.}
+  \label{fig:activity_lifecycle}
+\end{figure}
+
+\subsection*{Slu¾by}
+
+Komponenty slu¾eb mohou provádìt dlouhobì¾ící operace na~pozadí systému
+a~nedisponují ¾ádným u¾ivatelským rozhraním. Slu¾ba mù¾e být~spu¹tìna aplikací
+a~bì¾et dále, i~kdy¾ u¾ivatel zaène pou¾ívat aplikaci jinou. Navíc, pokud
+slu¾ba bì¾í, mù¾e ji~zaèít vyu¾ívat jiná komponenta a~tím provádìt meziprocesní
+komunikaci. Klasickým pøíkladem takové slu¾by je~pøehrávání hudby.
+
+
+Existují dva druhy slu¾eb:
+
+\begin{itemize}
+\item{\bf Spou¹tìná slu¾ba:}
+Taková slu¾ba bì¾í neomezenou dobu, i~kdy¾ komponenta, která ji~spustila, byla
+ukonèena. Zpravidla provede jednu operaci, ale~její výsledek neposkytuje svému
+rodièi. Po~dokonèení operace se~slu¾ba sama ukonèí, mù¾e v¹ak být ukonèena
+jinou komponentou.
+
+\item{\bf Vázaná slu¾ba:}
+Slu¾ba vázaná poskytuje dal¹ím komponentám, které~se~na~ni~navá¾í, rozhraní
+modelu klient-server a~komunikují mezi sebou pomocí dotazù a~odpovìdí.
+Komunikace mù¾e probíhat i~mezi rùznými procesy dal¹ích aplikací. Tento typ
+slu¾by zaniká v~okam¾iku, kdy~na~ni~není navázána ¾ádná komponenta.
+\end{itemize}
+
+
+Lze vytvoøit slu¾bu, která bude spou¹tìná i~vázaná zároveò. Kterákoliv slu¾ba
+mù¾e být deklarována jako privátní a~nebude tak~k~dispozici ostatním aplikacím.
+®ivotní cyklus slu¾eb znázoròuje
+diagram~\ref{fig:service_lifecycle}~\cite{ServiceCycle}\cite{Android2}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.3]{fig/service_lifecycle.eps}
+  \caption{®ivotní cyklus slu¾eb v~systému Android \cite{ServiceCycle}.}
+  \label{fig:service_lifecycle}
+\end{figure}
+
+\subsection*{Dodavatelé obsahu}
+
+Jedná se~o~správce pøístupu k~strukturované mno¾inì dat a~poskytují mechanismy
+k~jejich zabezpeèení. Data mohou být~ulo¾ena v~souborech, SQLite databázi
+nebo~dostupné na~internetu. Pro~interakci s~dodavateli obsahu je~k~dispozici
+relativnì jednoduché rozhraní \cite{ContentProviders}\cite{Android2}.
+
+\subsection*{Zámìry}
+
+Pro oznamování rùzných událostí, které mohou v~systému nastat, slou¾í zámìry.
+Jsou~to~systémové zprávy, upozoròující napøíklad na~zmìny hardwarové
+konfigurace, pøíchod dat (napø. SMS, MMS) nebo~oznamují události vyvolané
+aplikacemi. Na~jednotlivé zámìry lze nejen reagovat, ale~i~vytváøet vlastní
+zámìry pro~spou¹tìní aktivit nebo~pro~detekci specifických situací
+\cite{Intents}\cite{Android2}.
+
+\subsection{Licence}
+
+Preferovanou licencí pro~open source projekt Android je~Apache Software
+Licence~2.0\footnote{Plný text Apache Software Licence~2.0 je dostupný na
+\url{http://www.apache.org/licenses/LICENSE-2.0}.}
+a~vìt¹ina Android softwaru je~dostupná pod~touto licencí. I~kdy¾ bude projekt
+usilovat o~dodr¾ování licence, mohou se~vyskytnou výjimky, které~bude øe¹it
+pøípad od~pøípadu. Pøíkladem takové výjimky jsou~opravy linuxového jádra ¹íøené
+pod~licencí GPLv2\footnote{Znìní licence GPLv2 viz
+\url{http://www.kernel.org/pub/linux/kernel/COPYING}.} \cite{Licenses}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Systém GPS}
+
+Global Positioning System, GPS\footnote{\url{http://www.gps.gov/}.}, je~vesmírný
+satelitní navigaèní systém
+poskytující informaci o~èasu a~pozici kdekoliv na~Zemi nebo~v~její blízkosti.
+Funguje za~v¹ech povìtrnostních podmínek, pokud má zaøízení pøijímající signál
+pøímou viditelnost alespoò na~4~satelity. Jeho funkce jsou~dùle¾ité
+pro~vojenské, civilní a~komerèní u¾ivatele po~celém svìtì. Vlastní ho a~udr¾uje
+vláda Spojených státù amerických. Mù¾e jej~vyu¾ívat kdokoliv s~GPS
+pøijímaèem \cite{UnderstandingGPS}\cite{GPSGOV}\cite{Prirucka}.
+
+%---------------------------------------
+\subsection{Historie}
+
+Systém je~èásteènì zalo¾en na~podobných pozemních rádiových navigacích
+pou¾ívaných za~2.~svìtové války. Projekt GPS byl vytvoøen Ministerstvem obrany
+Spojených státù amerických v~roce~1973, který~poèítal s~18~satelity,
+aby~pøekonal omezení pøedchozích systémù. V~roce~1979 ho kvùli nedostaèujícímu
+poètu roz¹íøili na~24~satelitù a~stal~se~plnì dostupným 17.~ledna~1994.
+V~souèasnosti má systém a¾ 32~aktivních satelitù. Plánuje se~nahrazení v¹ech
+dnes slou¾ících satelitù za~36~úplnì
+nových \cite{UnderstandingGPS}\cite{GPSGOV}.
+
+%---------------------------------------
+\subsection{Segmenty systému}
+
+Aktuální GPS systém se skládá ze tøí hlavních èástí \cite{GPSGOV}.
+
+\subsection*{Kosmický segment}
+Tento segment zahrnuje satelity systému, které obíhají ve~vý¹ce 20\,200\,km
+nad~povrchem Zemì. Pùvodní návrh mìl 24~satelitù, rozdìlených pravidelnì po~8
+na~tøech pøibli¾nì kruhových drahách, ale~byl zmìnìn na~¹est drah
+po~4 satelitech pravidelnì. Dnes obíhají na~¹esti drahách rozmístìné
+po~5-6 nepravidelnì. Dráhy mají sklon~55\,$^\circ$ a~jsou vzájemnì posunuty
+o~60\,$^\circ$. Na~støední obì¾né dráze\footnote{Støední obì¾ná dráha se nachází
+ve vý¹ce zhruba 10-25\,tisíc kilometrù nad Zemí \cite{UnderstandingGPS}.}
+se~pohybují rychlostí 3,8\,km/s, doba obìhu kolem Zemì je~11\,hodin a~58\,minut
+(polovina siderického dne\footnote{Siderický den trvá 23\,hodin 56\,minut
+a~4,1\,sekundy, u¾ivá se~v~astronomii k~popisu zdánlivého pohybu hvìzd
+po~obloze, který~je~zpùsoben otáèením Zemì kolem její osy. Li¹í se~od~bì¾nì
+pou¾ívaného sluneèního dne, který hodnotami od~0 do~24\,hodin popisuje rotaci
+Zemì vùèi Slunci \cite{UnderstandingGPS}.}).
+
+Ka¾dý satelit má nìkolik klíèových èástí:
+\begin{itemize}
+\item 3-4 velmi pøesné (10$^{-13}$\,s) atomové hodiny\footnote{Popis atomových
+hodin viz \url{http://home.zcu.cz/~poupa/ptb.html}.} s~rubidiovým, døíve také
+cesiovým, oscilátorem,
+
+\item 12 antén RHCP\footnote{Zkratka anglického Right-Hand Circular
+Polarization, vektor intenzity elektrického pole vysílaného signálu se~otáèí
+ve~smìru hodinových ruèièek vzhledem k~pozorovateli hledícímu proti smìru ¹íøení
+signálu~\cite{NCS}.} pro vysílání rádiových kódù v~pásmu~L\footnote{Pásmem L je
+oznaèován kmitoètový rozsah 1-2\,GHz \cite{Parabola}.},
+
+\item antény pro komunikaci s~pozemními kontrolními stanicemi
+v~pásmu~S\footnote{Pásmem S~je oznaèován kmitoètový rozsah 2-3\,GHz
+\cite{Parabola}.},
+
+\item antény pro vzájemnou komunikaci satelitù v~pásmu
+UHF\footnote{Anglická zkratka pro Ultra-High Frequency, kmitoètový rozsah
+300\,MHz a¾ 3\,GHz \cite{DigiZone}.},
+
+\item optické, rentgenové a~pulzní-elektromagnetické senzory pro detekci
+startù balistických raket a~jaderných výbuchù,
+
+\item solární panely a~baterie jako zdroj energie \cite{UnderstandingGPS}.
+\end{itemize}
+
+Satelity jsou nìkolikrát do~roka, obvykle plánovanì, odstaveny pro~údr¾bu
+atomových hodin a~korekci dráhy satelitu. Údr¾ba trvá pøibli¾nì 12-24\,hodin.
+Prùmìrná ¾ivotnost satelitu je~asi~10\,let, obmìna kosmického segmentu trvá
+pøibli¾nì 20\,let.
+
+Pro popis kosmického segmentu jsou definovány dva stavy implementace:
+
+\begin{itemize}
+\item {\bf Plná operaèní schopnost:} Nejménì 24 plnì funkèních satelitù
+podporujících novou technologii.
+
+\item {\bf Èásteèná operaèní schopnost:} Nejménì 18 plnì funkèních satelitù
+podporujících novou
+technologii \cite{UnderstandingGPS}\cite{GPSGOV}\cite{Prirucka}.
+\end{itemize}
+
+\subsection*{Øídicí a~kontrolní segment}
+Tento segment obsahuje nìkolik èástí:
+
+\begin{itemize}
+\item {\bf Velitelství:} Navstar Headquarters je na~letecké základnì v~Los
+Angeles v~Kalifornii, USA.
+
+\item {\bf Øídicí støedisko:} Pouze jedno v~celém systému (plus jedno zálo¾ní).
+Zpracovává signály z~monitorovacích stanic, provádí modelování chování satelitù,
+urèuje parametry obì¾ných drah a~korekci hodin satelitù. Výsledky modelování
+pøedává povelovým stanicím. Sídlí na Schrieverovì letecké základnì
+USAF\footnote{Zkratka pro United States Air Force, letectvo Spojených státù
+amerických. Více informací\newline viz \url{http://www.airforce.com/}.}
+v~Colorado Springs, USA.
+
+\item {\bf Zálo¾ní øídicí støedisko:} Nachází se na letecké základnì Vandenberg
+v~Merylandu, USA. Pøebírá cviènì ètyøikrát do~roka øízení systému, v~nouzi
+je~pøipraveno do~24\,hodin.
+
+\item {\bf Povelové stanice:} Zpravidla jsou toto¾né se stanicemi
+monitorovacími. Pøená¹ejí nové parametry do satelitù a~také slou¾í k~jejich
+ovládání. V¹echny sídlí na~základnách USAF: Kwajalein, Diego Garcia, Ascension
+Island a~pøípadnì na~Mysu Canaveral.
+
+\item {\bf Monitorovací stanice:} Jsou rozmístìny tak, aby umo¾òovaly stálé
+sledování co nejvìt¹ího poètu satelitù po co nejdel¹í dobu. Monitorují vysílané
+signály ze satelitù a~pøená¹í je do stanic øídicích. Nacházejí se~na~základnách
+USAF: Havaj, Colorado Springs, Mys Canaveral, Ascension Island, Diego Garcia
+a~Kwajalein. Dal¹ích deset monitorovacích stanic po~svìtì spravuje
+NGA\footnote{Anglická zkratka pro National Geospatial-Intelligence Agency,
+více informací viz \url{http://www.nga.mil/}.}.
+\end{itemize}
+
+Výsledek monitoringu je~zveøejòován v~navigaèní zprávì ka¾dého satelitu
+a~platnost má øádovì nìkolik hodin. Zpráva nese následující informace:
+
+\begin{itemize}
+\item data pro model ionosférické refrakce\footnote{Zmìna rychlosti ¹íøení
+radiových vln pøi prùchodu ionosférou. Ionosféra je ionizovaná vrstva zemské
+atmosféry \cite{VUGTK}.},
+
+\item predikce dráhy satelitu, tzv. efemerid\footnote{Parametr obì¾né dráhy
+satelitu a~oprav chodu jeho hodin, který je promìnlivý v~èase \cite{VUGTK}.},
+
+\item korekce atomových hodin,
+
+\item pøibli¾né pozice ostatních satelitù a~jejich funkèní stav.
+\end{itemize}
+
+Øídicí a~kontrolní segment komunikuje také s~u¾ivateli prostøednictvím GPS
+NANU\footnote{Zkratka anglického Notice Advisory to NAVSTAR Users, jsou to
+zprávy informující u¾ivatele systému GPS o~událostech v~systému, které mohou
+ovlivnit pøesnost výsledkù mìøení \cite{VUGTK}. V¹echny jsou dostupné
+na \url{http://www.celestrak.com/GPS/NANU/}.} zpráv, kde~uveøejòuje plánované
+odstávky satelitù, jejich sta¾ení a~uvedení do~provozu, nebo~i~zpìtnì informace
+o~nefunkèním satelitu.
+
+Pokud by~do¹lo ke~znièení pozemních vojenských stanic tohoto segmentu, pøejdou
+satelity do~re¾imu AUTONAV\footnote{Z angliètiny zkratka pro Autonomous
+Navigation Mode.}, ve~kterém
+jsou schopny dále pracovat a¾~6\,mìsícù. V~tomto re¾imu spolu satelity komunikují
+a~porovnávají vzájemnì mezi sebou své~efemeridy a~stav palubních hodin. Výsledky
+poskytují u¾ivatelskému segmentu v~navigaèní zprávì. Tento re¾im v¹ak nikdy
+nenastal, nejsou ani~známy výsledky jeho pøípadných
+testù \cite{UnderstandingGPS}\cite{GPSGOV}\cite{Prirucka}.
+
+\subsection*{U¾ivatelský segment}
+U¾ivatelé pomocí GPS pøijímaèe pøijímají signály
+z~jednotlivých satelitù, které jsou právì nad~obzorem. Na~základì pøijatých dat
+a~pøedem definovaných parametrù pøijímaè vypoèítá svou~polohu, nadmoøskou vý¹ku
+a~zobrazí pøesný èas a~datum. Pøijímaè je~pasivní, komunikace probíhá pouze
+od~satelitù k~u¾ivateli.
+
+Pøijímaèe mù¾eme rozdìlit podle rùzných kritérií do~nìkolika skupin:
+
+\begin{itemize}
+\item {\bf Pøijímaná pásma:}
+  \begin{itemize}
+  \item jednofrekvenèní,
+  \item dvoufrekvenèní,
+  \item vícefrekvenèní.
+  \end{itemize}
+
+\item {\bf Poèet kanálù:}
+  \begin{itemize}
+  \item jednokanálové (pou¾ívané v~raných fázích GPS),
+  \item vícekanálové.
+  \end{itemize}
+
+\item {\bf Princip výpoètu:}
+  \begin{itemize}
+  \item kódové,
+  \item fázové a~kódové.
+  \end{itemize}
+\end{itemize}
+
+Vìt¹ina bì¾nì dostupných pøijímaèù k~amatérskému (tj.~negeodetickému
+a~nevojenskému) vyu¾ití se~vyrábí jako~jednofrekvenèní, vícekanálové a~kódové.
+Jednoduchý pøijímaè se~skládá~z:
+
+\begin{itemize}
+\item antény,
+\item pøedzesilovaèe,
+\item procesoru,
+\item èasové základny
+(èasto køemíkový krystal o~pøesnosti men¹í ne¾ 10$^{-6}$\,s),
+\item komunikaèního rozhraní.
+\end{itemize}
+
+U¾ivatele vyu¾ívající GPS slu¾by mù¾eme rozdìlit do~dvou skupin:
+
+\begin{itemize}
+\item {\bf Autorizovaní u¾ivatelé:} Vojenský sektor USA a~vybrané
+spojenecké armády vyu¾ívající slu¾bu Precise Positioning Service mající
+k~dispozici dekódovací klíè k~P(Y)\footnote{P(Y) je ¹ifrovaný vojenský
+kód \cite{UnderstandingGPS}.} kódu na~frekvencích L1\footnote{Frekvence L1 je
+1\,575,42\,MHz, vysílá se na ní C/A kód pro civilní u¾ivatele a~P(Y)
+kód \cite{UnderstandingGPS}.} a~L2\footnote{Frekvence L2 je 1\,227,62\,MHz, je
+na ní vysílán pouze P(Y) kód \cite{UnderstandingGPS}.}. Tato skupina u¾ivatelù
+má zaruèenou vy¹¹í pøesnost urèení polohy, kterou uplatòují pøedev¹ím
+v~aplikacích:
+
+\begin{itemize}
+\item podpora velení a~vojákù v~poli,
+\item doprava,
+\item navádìní zbraòových systémù,
+\item vojenská geodézie a~mapování,
+\item pøesný èas (ménì ne¾ 10$^{-7}$\,s).
+\end{itemize}
+
+\item {\bf Ostatní u¾ivatelé:} Hlavnì civilní sektor, u¾ivatelé mohou vyu¾ívat
+Standard Positioning Service a~mají k~dispozici C/A kód na~frekvenci L1.
+Pøijímaèe vyrobené v~USA nesmìjí být~exportovány, pokud nemají nastavená omezení
+vý¹ky do~18\,km a~rychlosti do~515\,m/s. Limity vychází z~prevence mo¾ného
+zneu¾ití jako~systému orientace v~prostoru ve~zbraních obdobných balistickým
+raketám nebo~støelám s~plochou dráhou letu. Typické vyu¾ití:
+
+\begin{itemize}
+\item pozemní doprava, letectví, námoønictvo, kosmické lety,
+\item geologie a~geofyzika,
+\item geodézie a~geografické informaèní systémy,
+\item archeologie,
+\item lesnictví a~zemìdìlství,
+\item turistika a~zábava,
+\item pøesný èas (ménì ne¾ 10$^{-6}$\,s)
+\cite{UnderstandingGPS}\cite{GPSGOV}\cite{Prirucka}.
+\end{itemize}
+\end{itemize}
+%---------------------------------------
+\subsection{Urèení polohy}
+
+Pro charakteristiku Zemì se~jako~vzta¾né tìleso vyu¾ívá
+geoid\footnote{Geoid je idealizovaný tvar Zemì, který splývá pøibli¾nì
+se støední hladinou moøí \cite{Prirucka}. Více\newline viz
+\url{http://oceanservice.noaa.gov/facts/geoid.html}.},
+který je~ale~pro matematický popis nevhodný. Proto pou¾íváme jeho aproximaci
+prvního stupnì~-~kouli, nebo~druhého
+stupnì~-~elipsoid\footnote{Elipsoid je matematicky definované rotaèní tìleso.
+Bývá definován tak, aby jeho støed le¾el ve~støedu Zemì a~aby se~co~nejlépe
+pøimykal geoidu. Definice viz
+\url{http://oldgeogr.muni.cz/ucebnice/kartografie/obsah.php?show=76&&jazyk=cz}.}.
+Pro~potøeby u¾ivatelù GPS je~nejèastìji u¾ívaný svìtový geografický referenèní
+systém WGS84\footnote{Zkratka z~angliètiny pro World Geodetic System 1984,
+je to souøadnicový systém, v~nìm¾ je poloha definována geodetickou ¹íøkou,
+geodetickou délkou a~(v~trojrozmìrném pøípadì) elipsoidickou
+vý¹kou \cite{VUGTK}\cite{Prirucka}. Více informací viz
+\url{http://earth-info.nga.mil/GandG/publications/tr8350.2/tr8350_2.html}.},
+který se~skládá~z:
+
+\begin{itemize}
+\item geodetického data,
+
+\item systému zemìpisných souøadnic (zemìpisná ¹íøka a~délka).
+\end{itemize}
+
+Pro výpoèty se~pou¾ívá geocentrický\footnote{Geocentrický znamená, ¾e se
+vztahuje ke støedu Zemì \cite{VUGTK}.} referenèní systém WGS84 se~shodným datem,
+ale~s~kartézskými souøadnicemi v~systému ECEF\footnote{Zkratka anglického
+Earth-Centered, Earth-Fixed. Earth-Centered vyjadøuje, ¾e bod (0, 0, 0) je
+ve~støedu Zemì. Earth-Fixed znamená, ¾e~se~pozice souøadnic otáèí zároveò
+s~otáèením Zemì kolem její osy, kde kladná èást osy~$x$ míøí k~nultému poledníku,
+kladná èást osy~$y$ je otoèena o~90\,$^\circ$ od~osy~$x$ východnì a~kladná èást
+osy~$z$ míøí do~geografického Severního pólu. Celý tento systém je
+pravotoèivý \cite{UnderstandingGPS}.}.
+
+GPS èas je~mìøen na~týdny s~maximem 1\,024, díky èemu dochází k~jeho vynulování
+(naposledy 22.~srpna 1999). Dal¹í èasová znaèka je~poøadí podrámce v~navigaèní
+zprávì, který~nabývá hodnot s~maximem 100\,800, dále slova podrámce a~jeho
+datové bity, které~mají délku 0,02\,s. Poslední podrobný èasový otisk je~samotný
+kód. C/A~kód rozdìluje èas po~bitech dlouhých pøibli¾nì 10$^{-6}$\,s a~P~kód
+pøibli¾ne na~10$^{-7}$\,s. Porovnáním vzestupných a~sestupných hran
+PRN\footnote{Z anglického Pseudo-Random Noise, pseudonáhodný ¹um. Signálový ¹um,
+který splòuje jeden nebo více ze~standardních testù pro statistické
+náhodnosti \cite{NCS}\cite{Prirucka}.} kódù, modulovaných s~frekvencí nosné
+vlny, mù¾e moderní elektrotechnika zmìøit rozdíl a¾~na~tisíciny èasu bitu.
+Za~pøedpokladu pøesnosti 1\,\% bitu je~to~pøibli¾nì 10\,ns pro~C/A kód a~1\,ns
+pro~P(Y) kód. Proto¾e se~signál GPS ¹íøí rychlostí blízkou rychlosti svìtla,
+blí¾í se~krok mìøení pøi~1\,\% délky bitu øádovì asi~3\,metrùm u~C/A kódu,
+pro~P(Y) zhruba 0,3\,metru. Odeslaný signál má pøi~pøijetí zpo¾dìní 67\,ms
+(elevace\footnote{Elevace je sklon vzhledem ke~kolmici k~zemskému povrchu.}
+satelitu~90\,$^\circ$) a¾~86\,ms
+(elevace satelitu~0\,$^\circ$) \cite{UnderstandingGPS}\cite{Prirucka}.
+
+Pøesnost výpoètu polohy pøijímaèe podléhá vlivùm, které~vná¹í do~výpoètu
+chyby a~jsou náhodné velièiny. Velikost chyby popisujeme statistickým
+parametrem efektivní hodnota chyby (RMS\footnote{Kvadratický prùmìr, anglicky
+Root Mean Square.}):
+
+$$RMS=\sqrt{\displaystyle\sum\limits_{i=1}^n \frac{chyba^2}{n}}=E(X^2)$$
+co¾~je odmocnina z~prùmìru druhé mocniny chyby \cite{VUGTK}.
+
+Pøíèiny ovlivòující pøesnost výpoètu polohy kódového mìøení pøi
+GDOP\footnote{Anglická zkratka pro Geometric Dilution Of Precision, èesky
+parametr geometrické pøesnosti, je bezrozmìrný a~udává vliv geometrie
+prostorového uspoøádání satelitù a~pøijímaèe v~konkrétní epo¹e na pøesnost
+urèení ètyørozmìrné polohy pøijímaèe \cite{VUGTK}.}=1 jsou shrnuty
+v~tabulce \ref{tab:rms}.
+
+\begin{table}[htbp]
+\catcode`\-=12
+\centering
+\begin{tabular}{|l|c|}
+\hline
+{\bf Pøíèina} & {\bf Velikost RMS} \\
+\hline
+\hline
+Efemeridy satelitù & $\pm$ 2,1\,m \\
+\hline
+Hodiny satelitu & $\pm$ 2,1\,m \\
+\hline
+Ionosférické refrakce & $\pm$ 4,0\,m \\
+\hline
+Troposférické refrakce & $\pm$ 0,7\,m \\
+\hline
+Vícecestné ¹íøení signálu & $\pm$ 1,4\,m \\
+\hline
+Pøijímaè & $\pm$ 0,5\,m \\
+\hline
+\end{tabular}
+\caption{Dílèí parametry RMS pøi GDOP=1 \cite{Wormley}.}
+\label{tab:rms}
+\end{table}
+
+\subsection*{Asistované GPS}
+
+Po~integraci pøijímaèù v~mobilních telefonech vznikl zpìtný a~daleko rychlej¹í
+kanál díky mobilním datovým pøenosùm. Mù¾eme se~s~ním setkat pod~zkratkami aGPS
+nebo~A-GPS. Slou¾í k~rychlej¹ímu poèáteènímu urèení polohy. Tento systém
+umo¾òuje sledování pohybu zaøízení pøipojeného k~internetu s~GPS pøijímaèem
+témìø v~reálném èase. Disponuje dvìma slu¾bami:
+
+\begin{enumerate}
+\item Získávání almanachu a~dráhových efemeridù z~internetu. Odpadá tak~dlouhé
+odposlouchávání tìchto informací ze~signálù satelitù. Aktuálnost takových dat
+je~bì¾nì 7\,dnù. Telefony s~asistovaným GPS nabízí manuální sta¾ení,
+nebo~automatické po~jejich vypr¹ení.
+
+\item Místo interního procesoru vypoèítá polohu výkonný server, kterému telefon,
+nebo~jiné zaøízení, ode¹le nezpracovaná data. Toto se~v¹ak v~praxi moc
+nepou¾ívá. Na~podobném principu pracují zaøízení s~nízkou spotøebou
+(fotoaparáty, tracklogery, ...), u~kterých se~jedná o~tzv. off-line urèení
+polohy. Pro~výpoèet je~tøeba výkonný a~energeticky nároèný procesor, proto
+zaøízení pouze ukládají po~velmi krátkou dobu získávaná data ze~signálù
+satelitù, a~z~nich se~urèí poloha a¾~pøi~pøipojení k~poèítaèi \cite{AGPS}.
+\end{enumerate}
+
+\subsection*{Hybridní navigaèní systémy}
+
+Tyto systémy se~pou¾ívají k~urèování polohy bez~pøíjmu signálù ze~satelitù GPS,
+nebo~pro~pøibli¾né zji¹tìní polohy, dokud není získána ze~satelitù. Jejich
+nejvìt¹í výhodou je rychlost, øádovì nìkolik sekund \cite{AGPS}.
+
+\subsubsection*{Triangulace\footnote{Triangulace je zpùsob zji¹»ování souøadnic
+a~vzdáleností trigonometrickým výpoètem. Pøi~tomto výpoètu se~sestrojí pomyslný
+trojúhelník, jedna jeho strana je tvoøena spojnicí dvou referenèních bodù
+a~tøetí bod je místo, jeho¾ souøadnice zji¹»ujeme \cite{Geodis}.} GSM stanic}
+
+Triangulace vyu¾ívá polohy základnových GSM stanic mobilních operátorù. Telefon
+je pøihlá¹en v¾dy k~jedné z~nich, zná k~ní pøesnou vzdálenost a~disponuje
+seznamem dal¹ích stanic v~jeho dosahu. Pomocí tìchto informací mù¾e aplikace
+v~mobilním telefonu urèit alespoò pøibli¾nou polohu, kde~se~právì nachází. Tento
+systém mù¾e stejným zpùsobem vyu¾ít i~mobilní operátor, proto¾e má k~dispozici
+stejné informace \cite{AGPS}.
+
+\subsubsection*{Wi-Fi Position System}
+
+Existují databáze s~pozicemi pøístupových bodù a~jejich fyzickými
+MAC\footnote{Z anglického Media Access Control, je to identifikátor sí»ového
+zaøízení, který je pøidìlen pøi jeho výrobì, a~mìl by být celosvìtovì
+jedineèný \cite{TechTerms}.} adresami, ze~kterých lze, dotazem na~lokaci právì
+dostupných sítí, získat také svou pøibli¾nou polohu. Velkou nevýhodou tohoto
+systému urèování polohy je snadná napadnutelnost instalací zaøízení s~pozmìnìnou
+fyzickou adresou, nebo chybovost v~pøípadì, kdy~nejsou aktualizované pozice
+pøemístìných pøístupových bodù. Výhodou je~opìt rychlost urèení polohy,
+ale~navíc funkènost v~budovách.
+
+Nejvìt¹í takovou databází disponuje nejspí¹e spoleènost
+Skyhook\footnote{\url{http://www.skyhookwireless.com/}, tuto databázi vyu¾ívá
+i~Google Maps pro mobilní telefony.} a~v~souèasné dobì obsahuje více ne¾ stovku
+milionù pøístupových bodù. Tuto databázi mohou roz¹iøovat, manuálnì
+nebo~automaticky pomocí aplikací, sami u¾ivatelé pøímým mapováním oblastí
+(pøi~jízdì autem, na kole, pì¹ky, apod.) \cite{AGPS}.
+
+%----------------------------------------
+\subsection{GPX soubory}
+
+GPS eXchange formát souborù je XML schéma, navr¾ené jako hlavní datový formát
+pro~aplikace vyu¾ívající GPS, s~pøíponou .gpx. První vydaná verze se~objevila
+v~roce 2002, poslední verze GPX 1.1 pochází z~9.~srpna 2004. Za~jeho pou¾ívání
+se~neplatí ¾ádné licenèní poplatky.
+
+Do tagù se ukládají záznamy zemìpisné ¹íøky a~délky, nadmoøské vý¹ky a~èasu.
+Tyto informace lze pou¾ívat pro~výmìnu dat mezi GPS zaøízeními a~aplikacemi,
+napøíklad za~úèelem vizualizace a~navrhování tras na~mapových podkladech,
+anotace map nebo~ukládání geolokaèních záznamù v~metadatech fotografií.
+
+Zemìpisná ¹íøka a~délka je ukládána jako desetinné èíslo ve~stupních pou¾ívající
+systém WGS84, nadmoøská vý¹ka se ukládá v~metrech. Èas a~datum nejsou
+zaznamenávány v~lokálních èasových zónách,
+ale v~UTC\footnote{Zkratka anglického Coordinated Universal Time, v~èe¹tinì
+koordinovaný svìtový èas \cite{NCS}.} ve formátu dle standardizované normy
+ISO\footnote{Z anglického International Organization for Standardization,
+èesky Mezinárodní organizace pro normalizaci, \url{http://www.iso.org/}.}
+8601\footnote{Pøesný popis obsahuje norma ISO\,8601. Veøejnì dostupný krátký
+popis\newline je napø. na \url{http://www.cl.cam.ac.uk/~mgk25/iso-time.html}.}.
+
+GPX soubory mohou obsahovat popis:
+
+\begin{itemize}
+\item {\bf Bodù:} Není mezi nimi urèené ¾ádné poøadí, jedná se~pouze o~soubor
+souøadnic (napø.~nav¹tívená mìsta bìhem dovolené).
+
+\item {\bf Tras:} Seøazená mno¾ina souøadnic v~urèitém poøadí, která popisuje
+nìjakou trasu tak, jak~na~sebe navazují. Mù¾e to~být napøíklad zaznamenaná
+projitá turistická trasa, která obsahuje èasové znaèky v~jednotlivých bodech.
+
+\item {\bf Cest:} Seøazený seznam význaèných bodù vedoucích k~nìjakému cíly.
+Pøevá¾nì naplánované cesty, které je¹tì nikdo neprojel, bez èasových znaèek.
+\end{itemize}
+
+Ka¾dý bod musí povinnì obsahovat zemìpisnou ¹íøku a~délku, v¹echny ostatní
+hodnoty jsou nepovinné \cite{GPX}\cite{Prirucka}.
+
+Pøíklad GPX souboru obsahujícího polohy vybraných fakult VUT:
+
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.0">
+  <metadata>
+    <name>Vybrané fakulty VUT v~Brnì</name>
+  </metadata>
+  <wpt lat="49.226197" lon="16.599726">
+    <name>FIT</name>
+  </wpt>
+  <wpt lat="49.231460" lon="16.581365">
+    <name>FCH</name>
+  </wpt>
+  <wpt lat="49.207163" lon="16.595075">
+    <name>FAST</name>
+  </wpt>
+</gpx>
+\end{verbatim}
+
+%----------------------------------------
+\subsection{Ostatní navigaèní systémy}
+
+Kromì GPS existuje nìkolik dal¹ích navigaèních systémù, které jsou spravovány
+jinými státy nebo institucemi.
+
+\subsection*{GLONASS}
+
+Globální navigaèní satelitní
+systém\footnote{\url{http://www.glonass-center.ru/}.} (Global'naya
+Navigatsionnaya Sputnikovaya Sistema) vyvinutý v~SSSR a~provozovaný ruskou
+armádou. Jedná se~o~obdobu amerického GPS. Èást slu¾eb tohoto systému
+mohou~také s~omezenou pøesností volnì vyu¾ívat civilní u¾ivatelé. GLONASS
+je~v~souèasnosti jediný alternativní systém k~GPS s~globálním pokrytím
+a~srovnatelnou pøesností.
+
+Vývoj zapoèal roku 1970 vytvoøením dokumentu Ministerstva obrany SSSR, Sovìtské
+akademie vìd a~Sovìtského námoønictva o~vývoji jednotného systému pro navigaci
+na~zemi, na~vodì i~ve~vzduchu, který~byl v~roce~1976 pøijat. První testovací
+satelit vypustili 12.~øíjna 1982 a~za~ním následovalo vypu¹tìní mnoha dal¹ích.
+Systém byl kompletní roku 1995, ale~postupnì se~dostal do~úpadku. Bìhem
+prezidentování Vladimira Putina do¹lo k~obnovování systému, stal se~hlavní
+vládní prioritou a~byly na~nìj výraznì navý¹eny finanèní prostøedky. V~roce 2010
+pokrýval 100\,\% ruského území a~od~øíjna 2011 je~opìt plnì globální.
+Projektován byl na~24~satelitù a~u~tohoto poètu stále zùstává
+\cite{UnderstandingGPS}\cite{GLONASS}\cite{Start}\cite{portalGlonass}
+\cite{Prirucka}.
+
+\subsection*{IRNSS}
+
+Indický regionální navigaèní satelitní systém (Indian Regional
+Navigational Satellite System) by mìl být autonomní a~pod~plnou kontrolou
+indické vlády. Vyvíjí ho organizace ISRO\footnote{Zkratka anglického Indian
+Space Research Organisation, \url{http://isro.org/}.}. Úèelem pro~vytvoøení
+tohoto systému je fakt, ¾e~se~nelze spolehnout na~systém GPS v~nepøátelské
+situaci. Mìl by~poskytovat standardní slu¾bu pro~civilní u¾ivatele a~¹ifrovanou
+pro~oprávnìné u¾ivatele (armádu).
+
+Plný rozsah systému je v~plánu dokonèit kolem roku 2014. Bude se~skládat
+ze~sedmi satelitù a~bude podporován pozemním segmentem. Systém by~mìl dosahovat
+pøesnosti 10\,metrù na~zemi a~20\,metrù na~moøi. Koneèné pokrytí je oèekáváno
+v~rozsahu 1\,500\,km v~okruhu kolem
+Indie \cite{portalIrnss}\cite{ISRO}\cite{OOSA}.
+
+\subsection*{Galileo}
+
+Plánovaný evropský autonomní globální satelitní navigaèní systém. Bude se~jednat
+o~obdobu amerického systému GPS, ruského GLONASS a~èínského systému Compass.
+Jeho výstavbu zaji¹»ují státy Evropské unie prostøednictvím Evropské kosmické
+agentury\footnote{\url{http://www.esa.int/}.} a~dal\-¹ích institucí.
+
+Plány na~výstavbu zapoèaly ji¾~v~roce 1999 a~spu¹tìní se~mìlo uskuteènit v~roce
+2008. Pùvodnì mìl být tento projekt veøejný a~financovaný soukromými investory,
+ti ale~pro~pøíli¹ velká rizika od~tohoto modelu odstoupili. Evropská komise
+proto pøi¹la s~plánem hradit projekt z~rozpoètu EU a~spu¹tìní se~posunulo
+na~rok 2012. V~Bruselu v~roce 2004 zalo¾ili administrativní centrum
+GSA\footnote{Zkratka pro Galileo Supervising Authority,
+\url{http://www.gsa.europa.eu/}.} a~v~Nìmecku v~Oberpfaffenhofenu u~Mnichova
+technologické centrum GCC\footnote{Zkratka pro Galileo Control Centre.}.
+Pozdìji se~rozhodlo o~pøesunutí GSA z~Bruselu do~Prahy, kde~bylo nové sídlo
+v~loòském roce uvedeno do~provozu. Plnì funkèní systém má èítat 27~satelitù
+a~dal¹í 3~budou zálo¾ní, celkem tedy 30~satelitù. Dokonèení je~pøedpokládáno
+na~rok 2019.
+
+Galileo by mìl poskytovat 5 èasových a~polohových slu¾eb:
+
+\begin{itemize}
+\item {\bf Open Service (OS):} Volnì dostupná slu¾ba ve~dvou pásmech s~pøesností
+lep¹í ne¾~4\,metry horizontálnì a~8\,metrù vertikálnì. Pokud bude pou¾ito jen
+jedno pásmo, pøesnost se~sní¾í na~15\,metrù horizontálnì a~35\,metrù vertikálnì.
+Na~základì dohody o~kompatibilitì s~GPS budou nové pøijímaèe vyu¾ívat oba
+systémy souèasnì.
+
+\item {\bf Commercial Service (CS):} Pøesnost lep¹í ne¾~pøedchozí slu¾ba,
+ale~bude placená a~¹ifrovaná.
+
+\item {\bf Safety of Life Service (SOL):} ©ifrovaná slu¾ba s~dùrazem
+na~integritu a~bezpeènost (napø. øízení letového provozu).
+
+\item {\bf Search and Rescue (SAR):} Slu¾ba nouzové lokalizace v~rámci globální
+satelitní záchranné slu¾by COSPAS/SARSAT\footnote{Slu¾ba COSPAS/SARSAT vznikla
+v~roce 1979, jedná se~o~detekèní a~informaèní distribuèní systém, který
+vyhledává a~lokalizuje nouzové signály vyslané z~nouzových záchranných majákù
+letadel, lodí a~osobních nouzových bójí. Více viz
+\url{http://www.cospas-sarsat.org/}.}, která~bude disponovat oboustrannou
+komunikací.
+
+\item {\bf Public Regulated Service (PRS):} ©ifrovaná slu¾ba, pøístup k~ní bude
+kontrolován a~bude mít dlouhodobou podporu (armády, bezpeènostní slo¾ky státù)
+\cite{OOSA}\cite{UnderstandingGPS}\cite{ESA}\cite{Prirucka}.
+\end{itemize}
+
+\subsection*{Beidou}
+
+Byl to~regionální èínský autonomní satelitní navigaèní
+systém\footnote{\url{http://www.beidou.gov.cn/}.}, projekt
+Èínské lidové republiky. Jeho slu¾by byly~dostupné pouze v~Èínì a~pøilehlých
+regionech.
+
+Tento systém spustili 30.~øíjna~2000. Byl~slo¾en ze~ètyø
+geostacionárních\footnote{Geostacionární satelit se pozorovateli na Zemi jeví
+jako nehybný \cite{VUGTK}.} satelitù (3~hlavní, 1~zálo¾ní) a~byl testovacím
+systémem pro~dal¹í roz¹íøení. ®ádný z~jeho satelitù ji¾ není pou¾itelný.
+Nástupcem se~stal systém
+Compass (Beidou-2)\cite{BeiDou}\cite{portalBeidou}\cite{UnderstandingGPS}.
+
+\subsection*{Compass (Beidou-2)}
+
+Nástupce pøedchozího testovacího systému Beidou. Oproti pøedchùdci by~mìl
+být plnì globální a~nabízet slu¾bu otevøenou (veøejnost), ale~i~omezenou
+(armádní úèely), jako kon\-ku\-ren\-èní systémy.
+
+Své slu¾by zaèal poskytovat v~prosinci 2011 s~10 satelity na~obì¾né dráze.
+Od~prosince 2012 nabízí jeho 14 satelitù dostupnost na~západì Tichého oceánu
+a~zahrnuje vìt¹inu východní a~jihovýchodní Asie. Ve výstavbì dal¹ího roz¹íøení
+je od~ledna 2013 a~plnì globálním by~se~mìl stát po~jeho dokonèení v~roce 2020.
+Bude sestávat celkem z~35 satelitù, 27 umístìných na~støední obì¾né dráze
+(stejnì jako~GPS nebo~Galileo), 5 na~geostacionární dráze
+a~3~na~geosynchronní\footnote{Geosynchronní satelit obíhá kolem Zemì jeden
+siderický den, z~pohledu pozorovatele na~Zemi se~objekt na~této dráze vrací
+na~jedno místo na~obloze v¾dy ve~stejný èas ka¾dý den \cite{NCS}.} dráze.
+Pøesnost pro~civilní u¾ivatele má být opìt 10\,metrù, pro~vojenské úèely v¹ak
+pøesnìj¹í \cite{Compass}\cite{portalBeidou}\cite{BeiDou}\cite{UnderstandingGPS}.
+\\
+
+Jakmile budou dokonèeny v¹echny plánované globální navigaèní satelitní systémy,
+u¾ivatelé budou mít k~u¾itku více ne¾~75 satelitù pro~výraznì lep¹í urèení
+své~polohy, zejména v~tzv.~mìstských kaòonech\footnote{Mìstský kaòon je artefakt
+mìstského prostøedí podobný pøírodnímu kaòonu, kde jsou ulice hustì zastavìné
+domy, pøedev¹ím mrakodrapy.}.
+
+%===============================================================================
+\chapter{Analýza po¾adavkù}
+\label{analyza}
+%===============================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Existující systémy pro podporu cestování}
+
+\subsection*{Tripline\footnote{\url{http://tripline.net/}.}}
+
+Tento server umo¾òuje vytvoøení animované mapy s~cestou u¾ivatele. Do mapy
+lze vyná¹et jednotlivé body cesty, ke ka¾dému zaznamenanému bodu pøidat popisek
+a~pøilo¾it fotografie z~tohoto místa. Server poskytuje i~mo¾nost importu
+obsahu pro animaci ze sociální sítì Facebook, nav¹tívených míst ze serveru
+Foursquare, popiskù ze sítì Twitter, sdílených fotografií ze slu¾by
+Instagram\footnote{\url{http://instagram.com/}.} nebo cestovního itineráøe
+ze serveru TripIt\footnote{\url{https://www.tripit.com/}.}.
+
+Tripline dává k~dispozici u¾ivatelùm i~mobilní aplikaci pro on-line vytvoøení
+této mapy, ale pouze pro mobilní telefony
+iPhone\footnote{\url{http://www.apple.com/iphone/}.} od spoleènosti Apple.
+U¾ivatelé ostatních mobilních telefonù se musí spokojit s~webovým rozhraním
+uzpùsobeným pro mobilní zaøízení.
+
+\subsection*{TripIt}
+
+Server TripIt uspoøádá cestovní plán u¾ivatele do cestovního itinerárì, aby mìl
+pøístup ke v¹em detailùm této cesty z~jednoho místa. Staèí pøeposlat e-maily
+s~potvrzenými rezervacemi letù, hotelù, schùzek a~s~dal¹ími podobnými
+informacemi na centrální e-mail slu¾by, ze kterého se roztøídí mezi registrované
+u¾ivatele. Ze zaslaných informací se automaticky vytvoøí plán cesty.
+
+Za poplatek nabízí i~roz¹íøenou slu¾bu k~upozornìní na zmìny v~cestovním plánu
+nebo pro nabídku alternativních letù. Existuje je¹tì mo¾nost skupinové verze
+této slu¾by pro plánování itinerárì týmù.
+
+Tato slu¾ba má oproti pøedchozí slu¾bì mobilní aplikaci skoro pro v¹echny
+mobilní operaèní systémy, vèetnì Androidu.
+
+\subsection*{OnTheRoad\footnote{\url{http://www.ontheroad.to/}.}}
+
+OnTheRoad je on-line cestovní deník a~umo¾òuje naplánovat cestu u¾ivatele
+na interaktivní mapì. Lze pøidávat do cesty body, kde se u¾ivatel hodlá zdr¾et
+a~nabídne mu v~okolí tohoto místa mo¾nosti ubytování a~zábavy. V~interaktivní
+mapì mù¾e u¾ivatel umis»ovat poøízené forografie, videozáznamy a~poznámky
+z~cesty. Ve¹keré tyto záznamy v~deníku se dají sdílet s~pøáteli, rodinou
+nebo celým svìtem a~zveøejòovat na Facebooku nebo Twitteru.
+
+Cestovní deník OnTheRoad má také vlastní mobilní aplikace, tentokrát pouze
+pro iPhone a~Android.
+
+\subsection*{TIXIK.cz\footnote{\url{http://www.tixik.cz/}.}}
+
+Èeský cestovatelský portál TIXIK.cz umo¾òuje vyhledávání a~rezervaci ubytování
+na plánované cestì u¾ivatele. Kromì samotných ubytovacích zaøízení obsahuje
+i~seznam turistických zajímavostí z~celého svìta, které lze najít na satelitní
+mapì. Spojuje tedy mo¾nost nav¹tívit zajímavá turistická místa v~okolí ubytování
+u¾ivatele a~naopak nabízí mo¾nosti ubytování v~blízko turisticky zajímavých
+míst. Vyu¾ívá mapových podkladù spoleènosti Google i~k~vyhledání ostatních
+slu¾eb.
+
+Pro tento portál neexistuje ¾ádná mobilní aplikace, u¾ivatelé na nìj mohou
+pøistupovat pouze pøes webové rozhraní.
+
+%===============================================================================
+\chapter{Specifikace po¾adavkù}
+\label{specifikace}
+%===============================================================================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Funkce aplikace}
+
+V~aplikaci bude nutné nastavit domovský stát cestovatele, podle kterého se budou
+odvíjet základní nastavení nìkterých funkcí. Aplikace bude disponovat napø.:
+
+\begin{itemize}
+\item sledováním polohy cestovatele a~jejím záznamem (do GPX souborù),
+\item vyhledáváním slu¾eb v~okolí (hotely, bankomaty, restaurace, ...),
+\item konvertorem mìn,
+\item jazykovým pøekladaèem,
+\item funkcí záznamu cestovních výdajù,
+\item publikováním informací na sociální sí» Facebook,
+\item mo¾ností nastavit omezení objemu pøená¹ených dat aplikací,
+\item ...
+\end{itemize}
+
+\subsection*{Sledování aktuální polohy}
+
+Ukládání jednotlivých protnutých bodù po cestì s~nastavením periody záznamu
+tìchto bodù. Mo¾nost manuálního záznamu aktuální lokace. Data budou ukládána do
+souboru ve formátu GPX pro snadné vyu¾ití v~dal¹ích aplikacích (napø.
+synchronizace umístìní fotografií, vizualizace cesty v~mapì).
+
+\subsection*{Slu¾by v~okolí polohy}
+
+Pro hledání hotelù v~okolí jsou dostupná nìkterá API. Mo¾nost vyhledání hotelù
+i~v~okolí jiného bodu na mapì (pokud se dal¹í den chystá cestovatel být úplnì
+jinde). Vyhledání dal¹ích slu¾eb (bankomaty, èerpací stanice, restaurace, ...)
+v~blízkosti popø. i~jiného bodu.
+
+\subsection*{Konvertor mìn}
+
+Podle nastaveného domovského státu bude aplikace nabízet konverzi mìn s~mìnami
+státu, ve kterém se právì nachází zaøízení. Obì mìny bude mo¾né manuálnì zmìnit
+pro pøípad chybného urèení nebo pro konverzi jiných mìn (napø. pokud bude
+cestovatel chtít vìdìt kurz mìny státu, do kterého se chystá dal¹í den).
+
+\subsection*{Jazykový pøekladaè}
+
+On-line pøeklad mezi jazykem nastaveného domovského státu a~jazykem státu,
+ve kterém se právì nachází zaøízení (volba smìru pøekladu). Opìt bude mo¾né tyto
+jazyky zmìnit pro nesprávné rozpoznání nebo pro pøeklad z/do jiných jazykù.
+
+\subsection*{Záznam výdajù cestovatele}
+
+Ukládání jednotlivých výdajù na cestì v~rùzných kategoriích (strava, poplatky
+za dálnice, benzín, ...) se záznamem mìny a~pøevod do mìny domovské. Mo¾nost
+zobrazení výdajù za cestu/den/týden/... v~jednotlivých kategoriích. Tyto
+záznamy budou ukládány v~SQLite databázi aplikace.
+
+Aplikace bude mít i~funkci exportu celé databáze výdajù do nìkterého
+ze standardních formátù dat (CSV/XML/SQL/...).
+
+\subsection*{Publikování informací z~cesty}
+
+V~souèasnosti je populární sdílení informací mezi pøáteli a~známými na
+takzvaných sociálních sítích. U¾ivatelé zde mù¾ou zveøejòovat textové pøíspìvky,
+fotografie, videosoubory, nav¹tívená místa a~dal¹í obsah. Aplikace by tedy mìla
+obsahovat funkce pro sdílení tohoto obsahu na svìtovì nejroz¹íøenìj¹í sociální
+síti Facebook.
+
+\subsection*{Omezení objemu pøená¹ených dat}
+
+Pro vysoké poplatky, nebo omezené objemy mobilních dat v~zahranièí, bude vhodné
+omezit velikost pøená¹ených dat do aplikace. U¾ivatel si mù¾e nastavit maximální
+objem dat, který aplikaci povolí pøená¹et. Aplikace bude prùbì¾nì poèítat
+ji¾ pøenesená data a~zobrazovat informaci/varování o~vyèerpaném limitu.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{U¾ivatelské rozhraní}
+
+U¾ivatelské rozhraní aplikace je pro u¾ivatele nejdùle¾itìj¹ím prvkem, musí být
+jednoduché, pøehledné, intuitivní a~logicky uspoøádané. ©patnì navr¾ené ovládání
+funkcí mù¾e u¾ivatele od pou¾ívání aplikace odradit a~nedoporuèí ji ani svým
+pøátelùm nebo dal¹ím u¾ivatelùm.
+
+Aby aplikaci vyu¾ívalo vìt¹í mno¾ství u¾ivatelù, mìla by mít k~dispozici nìkolik
+jazykových prostøedí u¾ivatelského rozhraní. Proto¾e se jedná o~èeský projekt,
+mìla by obsahovat prostøedí v~èe¹tinì a~pro ostatní u¾ivatele ve svìtì bude
+vhodná minimálnì angliètina (popø. pøidání dal¹ích svìtových jazykù).
+
+%===============================================================================
+\chapter{Návrh aplikace}
+\label{navrh}
+%===============================================================================
+
+\section{Funkce aplikace}
+
+\subsection*{Sledování polohy}
+
+Zji¹tìní souøadnic polohy u¾ivatele bude obstarávat hardware zaøízení a~polohové
+slu¾by systému Android. Zemìpisnou ¹íøku, délku, nadmoøskou vý¹ku a~aktuální èas
+i~datum bude mít u¾ivatel mo¾nost zobrazit pøímo v~aplikaci.
+
+Získané souøadnice je potøeba zobrazit na vhodných mapových podkladech, aby
+u¾ivatel vìdìl, kde se nachází a~mohl se orientovat v~neznámém prostøedí. Pro
+tuto funkci dobøe poslou¾í Google Maps Android
+API\footnote{\url{https://developers.google.com/maps/documentation/android/}.}.
+U¾ivatel bude mít mo¾nost zmìnit typ zobrazeného mapového podkladu.
+
+\subsection*{Záznam trasy}
+
+Ukládání protnutých bodù trasy do souboru ve formátu GPX obstará
+naimplementovaná slu¾ba bì¾ící na pozadí, která bude zaznamenávat GPS
+souøadnice, i~kdy¾ nebude zobrazena ¾ádná aktivita aplikace. Ulo¾eny budou
+informace o~zemìpisné ¹íøce, zemìpisné délce, datu a~èasu. Pokud bude
+k~dispozci, ulo¾í se i~nadmoøská vý¹ka.
+
+V~menu této funkce u¾ivatel zadá název trasy a~mù¾e napsat i~krátký komentáø.
+Dále si u¾ivatel zvolí interval záznamu souøadnic. Po spu¹tìní bude mít mo¾nost
+zastavit ukládání nebo stiskem tlaèítka pøidat aktuální polohu s~názvem
+a~komentáøem.
+
+Diagram nastavení této funkce je na obrázku \ref{fig:diagram_zaznam_nastaveni}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.3]{fig/diagram_zaznam_nastaveni.eps}
+  \caption{Diagram nastavení záznamu trasy.}
+  \label{fig:diagram_zaznam_nastaveni}
+\end{figure}
+
+\subsection*{Vyhledávání slu¾eb v~okolí}
+
+Pro vyhledání slu¾eb v~okolí u¾ivatele je dostupné Google
+Places API\footnote{\url{https://developers.google.com/places/}.}, které
+umo¾òuje vyhledávání dle kategorií. Velkou
+databázi ubytovacích zaøízení lze nalézt na portálech
+HotelsBase\footnote{\url{http://www.hotelsbase.org/}.}, Expedia
+Travel\footnote{\url{http://www.expedia.com/}.}
+a~Booking.com\footnote{\url{https://www.booking.com/}.}. V¹echny tøi portály
+umo¾òují pøístup do jejich databází pomocí vlastních API. Tato rozhraní
+vrací výsledek v~XML formátu, který se bude v~aplikaci zpracovávat do tabulky
+pro zobrazení u¾ivateli
+
+U¾ivatel si vybere druh po¾adované slu¾by k~vyhledání, nastaví okruh maximální
+vzdálenosti od své pozice a~výsledek vyhledávání bude zobrazen v~tabulce
+obsahující pouze základní informace. Pøi stisknutí øádku tabulky se zobrazí
+v¹echny dostupné informace o~zvolené slu¾bì a~mo¾nost ulo¾ení informací o~této
+slu¾bì do databáze zaøízení.
+
+Diagram nastavení vyhledávání je na obrázku \ref{fig:diagram_sluzby_nastaveni},
+schéma tabulky ukládaných míst je na obrázku \ref{fig:places}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.35]{fig/diagram_sluzby_nastaveni.eps}
+  \caption{Diagram nastavení vyhledávání slu¾eb v~okolí.}
+  \label{fig:diagram_sluzby_nastaveni}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.4]{fig/places.eps}
+  \caption{Schéma tabulky v~databázi pro ukládání míst.}
+  \label{fig:places}
+\end{figure}
+
+\subsection*{Konvertor mìn}
+
+Spoleènost Google poskytovala také informace o~devizovém trhu a~umo¾òovala
+pøístup k~tìmto datùm pøes Google Finance
+API\footnote{\url{https://developers.google.com/finance/}.}, ale tato slu¾ba
+ji¾ není v~souèasnosti k~dispozici.
+
+Kurzy devizového trhu svìtových mìn se dají získávat z~mezinárodního
+obchodního systému Forex\footnote{\url{http://www.forex.com/}.}, který
+dává k~dispozici vlastní API. Vyu¾ívat bezplatnì tuto slu¾bu je bohu¾el mo¾né
+pouze pro testovací úèely.
+
+Vhodnou alternativou pro tento úèel mù¾e být velice jednoduché Yahoo! Finance
+API\footnote{\url{http://finance.yahoo.com/}.}, ke které lze pøistupovat
+URL adresou. Výsledek dotazu je ve formátu CSV\footnote{Z anglického
+comma-separated values, hodnoty oddìlené èárkami.} a~bude zpracován aplikací.
+
+Pøi spu¹tìní této funkce bude výchozí mìna, ze které se pøevádí, nastavena
+na mìnu zvolenou u¾ivatelem jako jeho domácí. Pokud bude mít zaøízení pøístup
+k~internetu, cílová mìna se nastaveí na mìnu státu, ve kterém se u¾ivatel
+nachází, jinak bude cílová mìna nastavena také na jeho domácí mìnu.
+
+\subsection*{Jazykový pøekladaè}
+
+Pøeklad mezi dvìma jazyky umo¾òuje Google Translate
+API\footnote{\url{https://developers.google.com/translate/}.}. Bohu¾el je toto
+rozhraní ji¾ del¹í dobu dostupné pouze jako placená slu¾ba a~bude nutné vyu¾ít
+standardní webový pøístup. K~pøekladaèi u¾ivatel pøistoupí pøímo pøes prohlí¾eè
+v~systému, nebo se bude výstup z~webového rozhraní zpracovávat v~aplikaci.
+
+Pøed zobrazením pøekladaèe se z~aktuálních zemìpisných souøadnic zjistí
+stát, ve kterém u¾ivatel právì je, a~podle tohoto státu se nastaví smìr pøekladu
+domovský jazyk -- jazyk zji¹tìného státu.
+
+\subsection*{Záznam výdajù cestovatele}
+
+Zápisník vynalo¾ených výdajù bìhem cestování bude øe¹en vlastní implementací.
+Ve¹keré záznamy o~výdajích se budou vkládat do tabulky v~SQLite databázi ulo¾ené
+pøímo v~zaøízení. Ulo¾ené výdaje lze zobrazit (vèetnì filtrování), upravit
+a~mazat. Jednou z~mo¾ností filtru zobrazení výdajù bude i~pøevod èástek v¹ech
+vyhovujících záznamù do domácí mìny a~poslední øádek tabulky zobrazí sumu
+tìchto èástek.
+
+Schéma tabulek databáze pro záznamy výdajù je na obrázku \ref{fig:vydaje}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{fig/vydaje.eps}
+  \caption{Schéma tabulek databáze pro výdaje.}
+  \label{fig:vydaje}
+\end{figure}
+
+\subsection*{Publikování informací z~cesty}
+
+Sdílení elektronického obsahu na sociální síti Facebook je mo¾né i~pøímo
+z~mobilních zaøízení s~operaèním systémem Android. Tato spoleènost dokonce
+poskytuje své vlastní
+SDK\footnote{\url{http://developers.facebook.com/android/}.} pro vývojáøe na
+platformì Android. Za pomoci tohoto prostøedí lze publikovat pøíspìvky,
+fotografie a~dal¹í druhy obsahu na profil u¾ivatele.
+
+\subsection*{Omezení objemu pøená¹ených dat}
+
+Souèástí aplikace bude nastavení pro prùbì¾né sèítání pøenesených dat aplikací
+z/do internetu. Tato slu¾ba zobrazí varování pøi blí¾ícím
+se dosa¾ení nastaveného datového limitu a~pokud bude tento limit dosa¾en,
+zobrazí chybové hlá¹ení s~mo¾ností jeho navý¹ení. Kdy¾ u¾ivatel datový limit
+nenavý¹í, aplikace pøestane komunikovat on-line, dokud nebude limit navý¹en.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{U¾ivatelské rozhraní}
+
+Obrazovky u¾ivatelského rozhraní aplikace budou vyplòovat celý displej zaøízení,
+viditelný zùstane pouze horní stavový panel, ve kterém je mo¾né zji¹»ovat
+napøíklad stav slu¾by urèování polohy.
+Varování a~dal¹í oznámení se budou zobrazovat pouze ve velikosti, jaká bude
+nutná pro plné zobrazení jejich zprávy a~vykreslí se nad právì zobrazenou
+obrazovkou.
+
+Pøi prvním spu¹tìní aplikace se zobrazí úvodní obrazovka s~nastavením
+\ref{fig:uvodni_obrazovka}, na které u¾ivatel vybere svùj rodný jazyk, domovský
+stát, zvolí domovskou mìnu, mìrnou soustavu a~nastaví datový limit. Toto
+nastavení se v~zaøízení ulo¾í a~pøi jejím dal¹ím spu¹tìní se ji¾ nezobrazí.
+Pokud bude u¾ivatel chtít nìkteré nastavení zmìnit, vyvolá úvodní obrazovku
+s~nastavením z~nabídky aplikace.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.4]{fig/uvodni_obrazovka.eps}
+  \caption{Úvodní obrazovka aplikace s~nastavením.}
+  \label{fig:uvodni_obrazovka}
+\end{figure}
+
+Po ulo¾ení úvodního nastavení, nebo pøi spu¹tìní ji¾ nastavené aplikace,
+se zobrazí obrazovka s~mapou a~její støed bude umístìn v~aktuální poloze
+zaøízení \ref{fig:obrazovka_mapa_chyba}. Pokud nebude k~dispozici aktuální
+poloha, vyvolá se oznámení s~mo¾ností zapnutí slu¾by zji¹»ování polohy
+(aktivování GPS modulu) \ref{fig:obrazovka_mapa_chyba}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.4]{fig/obrazovka_mapa_chyba.eps}
+  \caption{Obrazovka s~mapou a~støedem v~aktuální poloze (vlevo) a~oznámení
+pro zapnutí slu¾eb zji¹»ování polohy (vpravo).}
+  \label{fig:obrazovka_mapa_chyba}
+\end{figure}
+
+V¹echny funkce aplikace budou dostupné z~její hlavní nabídky \ref{fig:menu},
+ka¾dá funkce bude mít vlastní obrazovku pro interakci s~u¾ivatelem. Pokud
+vy¾aduje funkce nìjaké nastavení, budou tyto mo¾nosti souèástí obrazovky.
+
+Ka¾dá funkce aplikace bude mít minimálnì jednu vlastní programovou tøídu
+aktivity, která zajistí zobrazení jejího u¾ivatelského rozhraní. Definice
+vzhledu jednotlivých obrazovek bude ulo¾eno v~samostatných souborech pro
+ka¾dou aktivitu.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.4]{fig/menu.eps}
+  \caption{Menu funkcí aplikace.}
+  \label{fig:menu}
+\end{figure}
+
+Schéma nabídek implementované aplikace je na obrázku \ref{fig:menu_diagram}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.3]{fig/menu_diagram.eps}
+  \caption{Schéma nabídek aplikace.}
+  \label{fig:menu_diagram}
+\end{figure}
+
+%===============================================================================
+\chapter{Implementace}
+\label{implementace}
+%===============================================================================
+
+Aplikace je vytvoøena v~programovacím jazyce Java, vyu¾ívá pro své funkce
+Android SDK a~Facebook SDK.
+Minimální podporovanou verzí systému Android je 2.3.3 Gingerbread, API level 10,
+a~podle tabulky \ref{tab:android_distribution} ji mù¾e vyu¾ívat a¾ 94,4\,\%
+u¾ivatelù. Hlavními pou¾ívanými zdroji informací jsou GPS poloha a~pøístup
+k~Internetu, proto aplikace vy¾aduje oprávnìní ke zji¹tìní stavu tìchto zdrojù
+a~pøístupu k~nim. Mapové podklady vy¾adují také udìlení oprávnìní, stejnì tak
+i~zápis na externí úlo¾i¹tì dat (GPX záznamy a~export databáze).
+
+\section{Zji¹»ování GPS pozice}
+
+Android zaøízení obsahují slu¾bu pro získání aktuální pozice na Zemi. Vyu¾ívají
+nejen vestavìný GPS modul, ale i~dostupné WiFi sítì a~informace
+z~vysílaèù mobilních operátorù nebo mobilních datových sítí.
+
+\subsection*{Slu¾ba aktuální polohy}
+
+Pokud chce nìkterá tøída pøistupovat k~aktuální pozici, musí implementovat
+rozhraní \texttt{Lo\-ca\-ti\-on\-Listener} a~z~nìj funkci \texttt{onLocationChanged}.
+Dále je tøeba v~této tøídì získat instanci tøídy \texttt{LocationManager}
+voláním funkce \texttt{getSystemService} s~parametrem \texttt{Con\-text.LO\-CATION\_SERVICE},
+který pøíslu¹í právì slu¾bì urèování polohy. Aby byla tøídì zasílána aktuální
+poloha, je nutné tøídu zaregistrovat funkcí \texttt{requestLocationUpdates}
+získaného \texttt{LocationManager} objektu. Pøi této registraci je také
+specifikován minimální èasový interval a~minimální vzdálenost mezi aktualizacemi
+poloh. Odregistrování tøídy se provede funkcí \texttt{removeUpdates} stejného
+objektu.
+
+Funkci \texttt{onLocationChanged} se pøi ka¾dé zmìnì polohy pøedává jediný
+parametr, objekt tøídy \texttt{Location}, který obsahuje v¹echny momentálnì
+dostupné informace o~pozici. Tuto funkci implementuje pouze jediná aktivita,
+hlavní tøída \texttt{StartActivity} aplikace, a~pøes její statickou promìnnou
+\texttt{location} pøistupují k~aktuální poloze ostatní tøídy.
+
+Data ze statické promìnné \texttt{location} pou¾ívá:
+
+\begin{itemize}
+  \item mìøení vzdálenosti vzdu¹nou èarou od aktuální polohy k~poloze støedu
+  obrazovky s~mapou,
+  \item zobrazení informací o~aktuální poloze,
+  \item zji¹»ování adresy aktuální polohy,
+  \item pøekladaè pro identifikaci jazyka státu, ve které se zaøízení nachází,
+  \item hledání slu¾eb v~okolí aktuální pozice,
+  \item konvertor mìn pro zji¹tìní mìny státu, ve které se zaøízení nachází.
+\end{itemize}
+
+Zvolením statické promìnné pro ukládání nejnovìj¹í polohy se omezilo
+registrování a~odregistrování ka¾dé novì spu¹tìné aktivity pro její pøíjem,
+popø. slo¾ité pøedávání pøes argumenty funkcí. Tyto aktivity mají vìt¹inou velmi
+krátkou dobu ¾ivota a~nepotøebují stále získávat nejnovìj¹í polohu, vystaèí si
+s~jednorázovým zji¹tìním pøi jejich spu¹tìní.
+
+\bigskip
+
+Registraci s~vyu¾itím funkce \texttt{requestLocationUpdates} provádí navíc
+tøída \texttt{TrackSer\-vi\-ce}, která je jedinou slu¾bou v~aplikaci.
+\texttt{TrackSer\-vi\-ce} zaznamenává body trasy do GPX souborù a~bì¾í na pozadí
+systému, i~kdy¾ hlavní aktivita není spu¹tìná.
+
+\subsection*{Tøída \texttt{GoogleMap}}
+
+Získání pozice støedu obrazovky z~mapového podkladu hlavní aktivity lze provést
+voláním funkce \texttt{getCameraPosition} instance \texttt{map} tøídy
+\texttt{GoogleMap}. Instance \texttt{map} je také statická a~vyu¾ívá se
+v~pøípadì hledání slu¾eb v~okolí støedu obrazovky.
+
+\section{Získávání dat z~Internetu}
+
+Úlohy získávání dat ze sítì jsou velmi èasovì nároèné, proto není mo¾né
+od Android API verze 11 provádìt operace se sítí v~hlavním procesu
+aplikace a~je nutné vyu¾ít jejich asynchronní provádìní. Tøída, která provádí
+asynchronní operaci, musí dìdit z~tøídy \texttt{AsyncTask}. V~aplikaci existují
+dvì takové tøídy:
+
+\begin{itemize}
+  \item \texttt{ReverseGeocodingTask}:
+    \begin{itemize}
+      \item získává adresu místa ze zadané zemìpisné délky a~¹íøky,
+    \end{itemize}
+  \item \texttt{NetworkTask}:
+    \begin{itemize}
+      \item zji¹»uje stát podle aktuální polohy pro pøekladaè,
+      \item získává data o~slu¾bách v~okolí aktuální polohy,
+      \item vyhledává aktuální kurzy mìn konvertoru a~pøepoètu ulo¾ených výdajù,
+      \item zji¹»uje mìnu státu aktuální polohy pro u¾ivatelské nastavení
+      a~konvertor mìn.
+    \end{itemize}
+\end{itemize}
+
+Konstruktory tìchto tøíd dostávají jako parametr \emph{callback} objekt.
+Spu¹tìní asynchronního úkolu se provádí vytvoøením instance tøídy a~následným
+voláním její funkce \texttt{execute}. Parametry \texttt{execute} se pøedávají
+do funkce \texttt{doInBackground}, ta provádí vlastní získávání dat ze sítì. Po
+dokonèení tìla \texttt{doInBackground} je spu¹tìna funkce
+\texttt{onPostExecute}, která pøedává výsledek operace jako parametr funkce
+\texttt{onTaskComplete} objektu \emph{callback}.
+
+\bigskip
+
+Aktivity spou¹tìjící asynchronní úlohy musí implementovat, k~tomuto úèelu
+vytvoøený, interface \texttt{AsyncTaskCompleteListener} a~jeho metodu
+\texttt{onTaskComplete} volanou pøi dokonèení asynchronní úlohy.
+
+\subsection*{Pou¾ité zdroje dat}
+
+Informace o~nejbli¾¹ích hotelích jsou získávány pøes XML API databáze
+HotelsBase. Jako parametry pro získání dat se pou¾ijí zemìpisná ¹íøka a~délka
+zvolené polohy a~maximální pøímoèará vzdálenost hotelu od této polohy.
+Vzdálenost oèekává v~mílích.
+
+Hlavní výhodou HotelsBase API je pøístup k~databázi bez jakékoliv registrace,
+není omezen ani poèet dotazù na databázi.
+
+Pøíklad dotazu pro vyhledání hotelù v~okruhu 10\,mil od zadaných souøadnic:
+\url{http://api.hotelsbase.org/search.php?longitude=16.6&latitude=49.2&distanceMax=10.0}.
+
+\medskip
+
+Dal¹í slu¾by v~okolí pozice vyhledává aplikace pomocí Google Places API, opìt
+ve formátu XML. Oproti pøedchozímu zdroji dat obsahuje dotaz na tyto slu¾by
+navíc parametr \emph{types}, který urèuje typ\footnote{\url{https://developers.google.com/places/documentation/supported_types}.}
+vyhledávané slu¾by. Do dotazu je tøeba povinnì pøidat parametr \emph{sensor},
+jeho¾ hodnota \emph{true} znaèí pou¾ití souøadnic generovaných GPS modulem,
+naopak hodnota \emph{false} pou¾ití ruènì zadaných souøadnic. Parametr
+\emph{radius} obsahu vzdálenost v~metrech.
+
+Google Places API vy¾aduje aktivní Google úèet, aktivování tohoto API
+v~Google APIs Console\footnote{\url{https://code.google.com/apis/console/}.}
+a~vygenerování jedineèného pøístupového klíèe, který je také povinnou souèástí
+ka¾dého dotazu. Zde je pro bezplatné pou¾ití limit 1\,000 dotazù za den.
+
+Pøíklad dotazu pro vyhledání restaurací v~okruhu 100\,m z~ruènì zadaných
+souøadnic: \url{https://maps.googleapis.com/maps/api/place/nearbysearch/xml?key=API_KEY&location=49.2,16.6&radius=100&sensor=false&types=restaurant}.
+
+\medskip
+
+Zji¹tìní státu podle aktuální polohy vyu¾ívá volnì dostupnou geografickou
+databázi GeoNames\footnote{\url{http://www.geonames.org/}.}, konkrétnì její
+webovou slu¾bu CountryCode\footnote{\url{http://www.geonames.org/export/web-services.html\#countrycode}.}.
+Ze zadaných zemìpisných souøadnic je v~odpovìdi vrácen dvoupísmenný
+mezinárodní kód státu.
+
+Pøíklad dotazu na kód státu ze zadaných souøadnic: \url{http://ws.geonames.org/countryCode?lat=49.2&lng=16.6}.
+
+\medskip
+
+Aktuální kurzy svìtových mìn poskytuje aplikaci Yahoo Finance API. Parametr
+\emph{s} obsahuje dvojici trojmístných mezinárodních kódù mìn, v~poøadí, v~jakém
+je po¾adován kurz. Druhý parametr \emph{f} urèuje po¾adované
+informace\footnote{\url{http://www.jarloo.com/yahoo_finance/}.} vrácené
+v~odpovìdi. Odpovìï je vrácena ve formátu CSV.
+
+Pøíklad dotazu na kurz amerického dolaru k~èeské korunì, po¾adovaná informace
+odpovìdi je pouze desetinné èíslo kurzu: \url{finance.yahoo.com/d/quotes.csv?s=USDCZK=X&f=l1}.
+
+\section{Databáze}
+
+Aplikace ukládá perzistentní data u¾ivatele v~relaèním databázovém systému
+SQLite. Pro získání objektu k~pøístupu do databáze slou¾í tøída \texttt{SQLiteAdapter},
+která je potomkem tøídy \texttt{SQLiteOpenHelper}. Pøepisuje její metodu
+\texttt{onCreate}, zaji¹»ující vytvoøení struktury databáze, a~metodu
+\texttt{onUpgrade}, slou¾ící k~aktualizování struktury databáze pøi zmìnì.
+
+Práci se záznamy v~databázi obstarává tøída \texttt{DataSource}. Obsahuje
+metody pro vytvoøení, aktualizaci a~vymazání jednotlivých záznamù v~tabulce,
+metody vracející seznam v¹ech záznamù tabulky a~metody pro zji¹tìní, zda ji¾
+novì vytváøený záznam v~dané tabulce existuje.
+
+Tøídy \texttt{Category}, \texttt{Journey}, \texttt{Record} a~\texttt{Place}
+reprezentují jeden záznam k~nim pøíslu¹né tabulky. Ka¾dá z~tìchto tøíd
+implementuje metody pro získání hodnot jednotlivých sloupcù záznamu a~metody
+pro export celého záznamu do formátu XML, CVS a~SQL. Tabulka \emph{data},
+uchovávající poèty pøenesených bajtù jednotlivých sí»ových pøenosù, nemá vlastní
+tøídu, obsahuje pouze jeden sloupec a~je k~ní pøistupováno pøímo pomocí dotazù.
+
+V¹echny tabulky jsou ulo¾eny v~jedné databázi nazvané \emph{assistant}, její
+schéma je na obrázku \ref{fig:db}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{fig/fullDB.eps}
+  \caption{Schéma celé databáze \emph{assistant}.}
+  \label{fig:db}
+\end{figure}
+
+\section{U¾ivatelské rozhraní}
+
+Rozlo¾ení jednotlivých obrazovek a~dialogù aplikace je ulo¾eno v~samostatných
+souborech deklarovaných jazykem XML. Tímto zpùsobem umo¾òuje Android oddìlit
+funkèní logiku komponenty od jejího vzhledu.
+
+Kompletnì dynamicky vytváøené tabulkové náhledy mají v~souboru s~rozlo¾ením
+deklarovány jen nejvy¹¹í nemìnné prvky, do kterých vkládají dal¹í potøebné
+komponenty k~zobrazení u¾ivateli.
+
+%===============================================================================
+\chapter{Testování}
+\label{testovani}
+%===============================================================================
+
+Jedním z~dùle¾itých aspektù pøi vývoji jakékoliv aplikace je její dùkladné
+otestování. Testování u¾ivatelského rozhraní probíhalo pøevá¾nì v~emulátoru,
+kde lze pohodlnì mìnit rùzné parametry emulovaného zaøízení. Naopak funkènost,
+pøedev¹ím pøíjmu GPS signálu a~zobrazení mapových podkladù, byla testována na
+reálných zaøízeních, proto¾e ji nelze emulovat z~dùvodu absence potøebných
+knihoven.
+
+Testy probíhaly pod rùznými verzemi systému Android, byly vyzkou¹eny emulované
+verze od 2.3.3 (API 10) a¾ po 4.2.2 (API 17) a~navíc s~rùznými rozli¹eními
+displeje. Jako reálná zaøízení poslou¾ila Sony Xperia U~s~Androidem 2.3.3
+a~rozli¹ením 480x854, dále SonyEricsson Xperia mini pro s~Androidem 4.0.4
+a~s~rozli¹ení 320x480 a~HTC Sensation XE s~rozli¹ením displeje 540x960.
+
+Nejvíce testù probìhlo na chytrém mobilním telefonu SonyEricsson Xperia mini
+pro. Mnoho z~testù bylo provedeno jako krátká vyjí¾ïka na kole, motocyklu nebo
+v~automobilu do blízkých i~vzdálenìj¹ích míst v~okolí. Nìkolik testù probíhalo
+také pøi cestování mìstskou hromadnou dopravou z~místa bydli¹tì do zamìstnání
+èi ¹koly.
+
+Za neju¾iteènìj¹í by se dalo oznaèit testování s~pøipojeným mobilním telefonem
+k~notebooku, kdy lze sledovat logovací výpisy a~odhalit tak zdroje problémù,
+vìt¹inou vyvolaných výjimkami a~vedoucí k~ukonèení aplikace, na úrovni øádkù
+jednotlivých tøíd projektu. Ostatní zpùsoby testování v¹ak byly také velice
+pøínosné.
+
+\bigskip
+
+Zde je k~nahlédnutí výstup testu provedeného pøi prùjezdu krátké trasy mezi obcemi
+Zbý¹ov -- Neslovice -- Kratochvilka -- Babice u~Rosic -- Zbý¹ov. Pøi tomto testu
+probíhalo zaznamenávání trasy s~intervalem 4\,s. Data z~výsledného GPX souboru
+byla vynesena do Google mapy a~lze ji vidìt na obrázku \ref{fig:mapa}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.75]{fig/mapa.eps}
+  \caption{Trasa zaznamenaná aplikací pøi jednom z~testù.}
+  \label{fig:mapa}
+\end{figure}
+
+Symbolem domeèku je na mapì vyznaèeno výjezdní místo trasy, symboly v~podobì
+písmene \emph{i} pøedstavují místa pokusu vyhledat slu¾by v~jeho okolí a~symbol
+pøíboru oznaèuje nav¹tívenou restauraci, která byla vyhledána pøes aplikaci.
+Poslední symbol fotoaparátu je znaèka pro poøízenou fotografii, která byla ihned
+publikována na sociální sí» Facebook. Výsledky nìkterých vyhledávání lze vidìt
+na obrázcích \ref{fig:zbysov}, \ref{fig:neslovice} a~\ref{fig:kratochvilka}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{fig/zbysov.eps}
+  \caption{Výsledky vyhledávání nejbli¾¹ích hotelù (nahoøe) a~restaurací (dole)
+  v~bodì se symbolem \emph{i} v~obci Zbý¹ov.}
+  \label{fig:zbysov}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{fig/neslovice.eps}
+  \caption{Výsledky vyhledávání nejbli¾¹ích restaurací (nahoøe), hotelù (uprostøed)
+  a~èerpacích stanic (dole) v~bodì se symbolem \emph{i} v~obci Neslovice.}
+  \label{fig:neslovice}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.5]{fig/kratochvilka.eps}
+  \caption{Výsledky vyhledávání nejbli¾¹ích lékáren (nahoøe) a~restaurací (dole)
+  v~bodì se symbolem \emph{i} v~obci Kratochvilka.}
+  \label{fig:kratochvilka}
+\end{figure}
+
+\newpage
+Krátký úryvek ze zaznamenaného GPX souboru:
+
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.0">
+  <trk>
+    <name>neslovice</name>
+    <trkseg>
+      <trkpt lat="49.15722786" lon="16.34190919" />
+      <trkpt lat="49.15722787" lon="16.34190915" />
+      <trkpt lat="49.15722791" lon="16.34189527" />
+      <trkpt lat="49.1572287" lon="16.34188008" />
+               .          .          .
+               .          .          .
+               .          .          .
+      <trkpt lat="49.16078499" lon="16.37478101" />
+      <trkpt lat="49.1609442" lon="16.37461664" />
+      <trkpt lat="49.16120481" lon="16.37431641" />
+      <trkpt lat="49.16137925" lon="16.37407004" />
+    </trkseg>
+  </trk>
+</gpx>
+\end{verbatim}
+
+%===============================================================================
+\chapter{Závìr}
+\label{zaver}
+%===============================================================================
+
+\section{Zhodnocení výsledkù}
+
+
+
+\subsection*{Sledování aktuální polohy}
+
+Pøesnost urèení zemìpisné polohy je závislá na kvalitì pøíjmu signálu z~dru¾ic,
+ale také na pou¾itém pøijímaèi. Pokud má zaøízení pøímou viditelnost na oblohu,
+pohybuje se odchylka od správné polohy v~øádech jednotek metrù. V~mìstských
+zástavbách mù¾e ke zvý¹ení pøesnosti pøispìt zapnutí sí»ového rozhraní WiFi,
+pøes které systém zji¹»uje polohy jednotlivých dostupných pøístupových bodù.
+Nìkterým lidem mù¾e postaèovat i~pøibli¾ná poloha, ze které se sami zorientují
+na zobrazené mapì.
+
+\subsection*{Záznam bodù cesty}
+
+Záznam absolvované cesty by mohl slou¾it hlavnì turistùm, kteøí by tak mohly
+sledovat pokoøené vzdálenosti na jejich trasách a~nechat si vygenerovat
+napøíklad diagram pøekonaných pøevý¹ení. O~tyto informace se pak mohou podìlit
+prostøednictvím rùzných online nástrojù pro vizualizaci tras z~GPX souborù.
+
+\subsection*{Slu¾by v~okolí polohy}
+
+Vyhledávání slu¾eb v~nejbli¾¹ím okolí a~ukládání jejich pozic do databáze,
+bude pro vìt¹inu u¾ivatelù této aplikace asi nejvìt¹ím pomocníkem. Pokud nìkdo
+hodnì cestuje a~musí stále naslepo hledat po¾adované slu¾by v~okolí, umo¾ní mu
+aplikace zobrazit pøehledný výpis nejbli¾¹ího výskytu tìchto slu¾eb.
+
+\subsection*{Konvertor mìn}
+
+Hodnì lidí pøi svých cestách se zajímá o~to, jakou èástku utratí v~cizí mìnì
+pøi pøepoètu na mìnu vlastní. Funkce konvertoru mìn by jim mohla neustálé
+pøepoèty kurzù usnadnit.
+
+\subsection*{Jazykový pøekladaè}
+
+Funkèní èástí pro pøekladaè je v~aplikaci, bohu¾el, pouze automatická detekce
+dvou jazykù, mezi kterými se bude provádìt pøeklad. Samotný pøeklad je provádìn
+ve webovém rozhraní Google pøekladaèe.
+
+\subsection*{Záznam výdajù cestovatele}
+
+Funkce záznamu výdajù je asi nejrozsáhlej¹í èástí aplikace. Implementovaná
+funkcionalita poskytuje dostateèné mno¾ství nastavení a~mo¾ností pro ty, kteøí
+mají potøebu evidovat své cestovní výdaje.
+
+\subsection*{Publikování informací z~cesty}
+
+Aplikace umo¾òuje zveøejnit zprávu, nav¹tívené místo a~sdílet fotografii
+na profilu u¾ivatele sociální sítì Facebook. V¹echny tøi funkce fungují
+spolehlivì, ale problém mù¾e nastat napøíklad pøi nekvalitním pøipojení
+k~internetu, kdy je pøíli¹ dlouhý èas odezvy serveru nebo je spojení
+pøeru¹ováno.
+
+\subsection*{Omezení objemu pøená¹ených dat}
+
+Funkcionalita omezování pøená¹ených dat není pøíli¹ pøesná pøi nastavení
+velmi malých datových limitù v~øádech jednotek èi desítek kB. Aplikace doká¾e
+sèítat pouze mno¾ství dat pøená¹ené v~tìle aplikaèních protokolù a~nemá pøístup
+k~velikostem hlavièek protokolù ni¾¹ích vrstev. Navíc zaznamená jen data
+pøíchozí, nikoliv odesílaná. Dal¹ím nedostatkem je nemo¾nost kontrolovat
+datový provoz samotných Google map.
+
+\section{Pøínos práce}
+
+Hlavním pøínosem této práce pro mne bylo seznámení se s~mobilním systémem
+Android, jeho SDK a~pochopení návrhu a~principu vývoje aplikací pro tuto, dnes
+velice roz¹íøenou, platformu. Dále jsem si osvojil práci s~asynchronními
+úkoly, dlouzebì¾ícími slu¾bami spou¹tìnýmí na pozadí a~s~pou¾itím databáze SQLite.
+Vìøím, ¾e nabyté zku¹enosti velice dobøe vyu¾iji v~praxi.
+
+\section{Budoucnost projektu}
+
+Nejbli¾¹í budoucností projektu je jeho roz¹íøení o~dal¹í vhodné funkce, které
+by mohl cestovatel pøi svých cestách ocenit a~vyu¾ít. Po tomto roz¹íøení
+a~odladìní funkènosti je pøedpokládáno jeho obohacení o~dal¹í jazykové prostøedí
+a~uvedení v~online obchodu s~aplikacemi Google Play, kde by ho vyzkou¹elo mnoho
+u¾ivatelù, kteøí by mohly poskytnout u¾iteèné rady a~nápady pro jeho vylep¹ení.
+
+
+

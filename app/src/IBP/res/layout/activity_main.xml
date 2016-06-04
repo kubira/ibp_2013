@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity" >
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+	    <ToggleButton
+		    android:id="@+id/togglebutton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:textOn=""
+		    android:textOff=""
+		    android:onClick="onToggleClicked"
+		    android:checked="true"
+		    android:background="@drawable/foot" />
+	    <Button
+	        android:id="@+id/places"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:background="@drawable/places"
+	        android:onClick="savedPlaces" />
+	    <Button
+	        android:id="@+id/show"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:background="@drawable/distance"
+	        android:onClick="ukaz" />
+	    <Button
+	        android:id="@+id/btn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:background="@drawable/center"
+	        android:onClick="jedem" />
+	    <Button
+	        android:id="@+id/goTo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text=""
+	        android:background="@drawable/go_to"
+	        android:onClick="goTo" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/map"
+        android:text=""
+        android:background="@drawable/gps_info"
+        android:onClick="showInfo" />
+    <Button
+        android:id="@+id/infoCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/map"
+        android:layout_toRightOf="@id/info"
+        android:text=""
+        android:background="@drawable/cam_info"
+        android:onClick="showCameraInfo" />
+    <Button
+        android:id="@+id/gpsAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/map"
+        android:layout_toRightOf="@id/infoCamera"
+        android:text=""
+        android:background="@drawable/gps_address"
+        android:onClick="getAddress" />
+    <Button
+        android:id="@+id/camAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/map"
+        android:layout_toRightOf="@id/gpsAddress"
+        android:text=""
+        android:background="@drawable/cam_address"
+        android:onClick="getCamAddress" />
+
+</RelativeLayout> 

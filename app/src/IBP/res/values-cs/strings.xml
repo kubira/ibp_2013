@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="me">Zde jsem</string>
+    
+    <string name="app_name">Pomocník pro cestovatele</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="activity_map_text">Zde bude mapa</string>
+    <string name="title_activity_menu">Hlavní nabídka</string>
+    <string name="activity_menu_text">Zde bude hlavní nabídka</string>
+    <string name="title_activity_currency_converter">Převodník měn</string>
+    <string name="currency_converter_text">Zde bude převodník měn</string>
+    <string name="title_activity_tourist_pois">Turistické cíle</string>
+    <string name="tourist_pois_text">Zde budou turistické cíle</string>
+    <string name="title_activity_track_position">Sledování polohy</string>
+    <string name="track_position_text">Zde bude sledování polohy</string>
+    <string name="title_activity_services_around">Služby v okolí</string>
+    <string name="services_around_text">Zde budou služby v okolí</string>
+    <string name="title_activity_translator">Překladač</string>
+    <string name="translator_text">Zde bude překladač</string>
+    <string name="title_activity_costs_logger">Záznamník výdajů</string>
+    <string name="costs_logger_text">Zde bude záznamník výdajů</string>
+    <string name="title_activity_information_sharing">Sdílení informací</string>
+    <string name="information_sharing_text">Zde bude sdílení informací</string>
+    <string name="title_activity_more_details">Další podrobnosti</string>
+    <string name="more_details_text">Zde budou další podrobnosti</string>
+    <string name="title_activity_settings">Nastavení</string>
+    <string name="settings_text">Zde bude nastavení</string>
+    <string name="myLocation">Tady su :)</string>
+    <string name="title_activity_start">Start Aktivita</string>
+    <string name="hello_world">Ahoj světe!</string>
+
+    
+    <string name="amount_input_field_label_text">Částka:</string>
+    <string name="amount_input_field_hint">Utracená částka</string>
+    <string name="currency_spinner_label_text">Měna:</string>
+    <string name="category_spinner_label_text">Kategorie:</string>
+    <string name="journey_spinner_label_text">Cesta:</string>
+    <string name="save_button_text">Uložit</string>
+    <string name="plus_text">+</string>
+    <string name="new_currency_name_field_hint">Název měny</string>
+    <string name="new_currency_code_field_hint">Zkratka měny</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Zrušit</string>
+    <string name="new_category_name_field_hint">Název kategorie</string>
+    <string name="new_journey_name_field_hint">Název cesty</string>
+    <string name="new_currency_dialog_title">Nová měna</string>
+    <string name="new_category_dialog_title">Nová kategorie</string>
+    <string name="new_journey_dialog_title">Nová cesta</string>
+    <string name="bad_amount_format">Špatný formát utracené částky</string>
+    <string name="empty_amount">Utracená částka je prázdná</string>
+    <string name="empty_currency_name">Název měny je prázdný</string>
+    <string name="empty_currency_code">Zkratka měny je prázdná</string>
+    <string name="short_currency_code">Zkratka měny musí mít 3 znaky</string>
+    <string name="empty_category_name">Název kategorie je prázdný</string>
+    <string name="empty_journey_name">Název cesty je prázdný</string>
+    <string name="input_error">Chyba vstupu</string>
+    <string name="currency_name_exists">Měna s tímto jménem již existuje</string>
+    <string name="currency_code_exists">Měna s tímto kódem již existuje</string>
+    <string name="category_name_exists">Kategorie s tímto jménem již existuje</string>
+    <string name="journey_name_exists">Cesta s tímto jménem již existuje</string>
+    <string name="journey_filter_label">Filtr cesty:</string>
+    <string name="category_filter_label">Filtr kategorie:</string>
+    <string name="currency_filter_label">Filtr měny:</string>
+    <string name="order_by_filter_label">Seřadit podle:</string>
+    <string name="date_from_filter_label">Filtr datum od:</string>
+    <string name="date_to_filter_label">Filtr datum do:</string>
+    <string name="amount_from_filter_label">Filtr částka od:</string>
+    <string name="amount_from_filter_hint">Částka od</string>
+    <string name="amount_to_filter_label">Filtr částka do:</string>
+    <string name="amount_to_filter_hint">Částka do</string>
+    <string name="bad_interval_date">Počáteční hodnota intervalu data je větší než koncová</string>
+    <string name="bad_interval_amount">Počáteční hodnota intervalu částky je větší než koncová</string>
+    <string name="show_filtered">Zobraz</string>
+    <string name="empty_amount_from">Částka od je prázdná</string>
+    <string name="empty_amount_to">Částka do je prázdná</string>
+    <string name="bad_amount_from_format">Špatný formát částky od</string>
+    <string name="bad_amount_to_format">Špatný formát částky do</string>
+    <string name="delete_button">Smazat</string>
+    <string name="edit_button">Upravit</string>
+    <string name="info_date">Datum a čas: </string>
+    <string name="info_journey">Cesta: </string>
+    <string name="info_category">Kategorie: </string>
+    <string name="info_amount">Částka: </string>
+    <string name="info_currency">Měna: </string>
+    <string name="date_delimiter">.</string>
+    <string name="time_delimiter">:</string>
+    <string name="saving_cost">Ukládám výdaj &#8230;</string>
+    <string name="cost_saved">Výdaj uložen.</string>
+    <string name="saving_category">Ukládám kategorii &#8230;</string>
+    <string name="category_saved">Kategorie uložena.</string>
+    <string name="saving_currency">Ukládám měnu &#8230;</string>
+    <string name="currency_saved">Měna uložena.</string>
+    <string name="saving_journey">Ukládám cestu &#8230;</string>
+    <string name="journey_saved">Cesta uložena.</string>
+    <string name="deleting_record">Mažu výdaj &#8230;</string>
+    <string name="record_deleted">Výdaj smazán.</string>
+    <string name="date_column">Datum</string>
+    <string name="time_column">Čas</string>
+    <string name="journey_column">Cesta</string>
+    <string name="category_column">Kategorie</string>
+    <string name="amount_column">Částka</string>
+    <string name="currency_column">Měna</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+    <string name="add_cost">Přidej výdaj</string>
+    <string name="costs_filter">Filtr výdajů</string>
+    <string name="costs_options_managing">Správa voleb výdajů</string>
+    <string name="delete_record_prompt">Opravdu chcete smazat zvolený záznam?</string>
+    <string name="information">Informace</string>
+    <string name="no_costs">Záznamník výdajů neobsahuje žádné záznamy.</string>
+    <string name="currencies">Měny</string>
+    <string name="categories">Kategorie</string>
+    <string name="journeys">Cesty</string>
+    <string name="bad_latitude">Špatný formát zeměpisné šířky</string>
+    <string name="bad_longitude">Špatný formát zeměpisné délky</string>
+
+    <string name="unknow_rate">Neznámý kurz</string>
+    <string name="unknow_rate_text">Kurz nebyl nalezen, existuje měna?</string>
+    <string name="not_available">není k dispozici</string>
+    
+    <string-array name="order_by">
+        <item>Kategorie</item>
+        <item>Měna</item>
+        <item>Cesta</item>
+        <item>Částka</item>
+        <item>Datum</item>
+    </string-array>
+    
+    <string-array name="measurement_units">
+        <item>kilometr/metr</item>
+        <item>míle/stopa</item>
+    </string-array>
+
+    <string name="title_activity_record_menu">Hlavní menu záznamníku výdajů</string>
+    <string name="title_activity_filter_record">Filtr záznamů</string>
+    <string name="title_activity_view_records">Zobrazené záznamy</string>
+    <string name="title_activity_record_edit">Editace záznamu</string>
+    <string name="title_activity_costs_options_menu">Správa voleb výdajů</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_currencies">Uložené měny</string>
+    <string name="title_activity_view_categories">Uložené kategorie</string>
+    <string name="title_activity_view_journeys">Uložené cesty</string>
+    
+    
+    <string name="number_of_units">Počet jednotek</string>
+    <string name="hotels">Hotely</string>
+    <string name="no_connection_text">Připojení není k dispozici</string>
+    <string name="net_error">Chyba sítě</string>
+    
+    <string name="no_position_text">Není k dispozici GPS</string>
+    <string name="gps_error">GPS chyba</string>
+    
+    <string name="data_limit">Datový limit</string>
+    <string name="data_limit_text">Bylo dosaženo</string>
+</resources>

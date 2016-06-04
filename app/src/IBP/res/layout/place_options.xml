@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ServicesAround" >
+
+    <TextView
+        android:id="@+id/location_radio_group_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Střed hledání:" />
+    <RadioGroup
+		android:id="@+id/location_radio_group"
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/location_radio_group_title"
+		android:orientation="vertical" >
+        <RadioButton
+            android:id="@+id/actual"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:checked="true"
+			android:text="Moje aktuální GPS poloha" />
+        <RadioButton
+            android:id="@+id/camera"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Poloha středu obrazovky" />
+    </RadioGroup>
+    <TextView
+        android:id="@+id/seekbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/location_radio_group"
+        android:text="Vzdálenost:" />
+    <LinearLayout
+		android:id="@+id/seekbar_layout"
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+	    android:layout_below="@id/seekbar_title" >
+	    <SeekBar
+	        android:id="@+id/seekbar"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".80" />
+	    <TextView
+	        android:id="@+id/seekbar_field"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight=".20"
+	        android:gravity="right|center_vertical"
+	        android:text="30" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/hotels_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:layout_below="@id/seekbar_layout"
+        android:text="Hledej" />
+
+</RelativeLayout>

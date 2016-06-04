@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".StartActivity" >
+
+    <Spinner
+        android:id="@+id/country_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/limit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/country_spinner"
+        android:layout_marginBottom="20dp" >
+        <CheckBox
+            android:id="@+id/limit_checkbox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+        	android:layout_weight=".13"
+        	android:onClick="limitCheckBoxAction" />
+        <EditText
+            android:id="@+id/limit_text"
+            android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight=".57"
+        	android:inputType="number"
+        	android:hint="počet jednotek" />
+        <Spinner
+	        android:id="@+id/unit_spinner"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".30" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/limit_layout"
+        android:onClick="saveButtonAction"
+        android:text="Ulož" />
+</RelativeLayout>

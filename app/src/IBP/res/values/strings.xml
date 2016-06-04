@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_id">576040932416377</string>
+    
+    <string name="cancelled">Cancelled</string>
+    <string name="permission_not_granted">Unable to perform selected action because permissions were not granted.</string>
+    <string name="ok">OK</string>
+    <string name="hello_user">Hello %1$s!</string>
+    <string name="success">Success</string>
+    <string name="successfully_posted_post">Successfully posted \'%1$s\'.\nPost ID: %2$s</string>
+    <string name="error">Error</string>
+    <string name="status_update">Updating status for %1$s at %2$s</string>
+    <string name="photo_post">Photo Post</string>
+    <string name="you_picked">You picked:</string>
+    <string name="no_friends_selected">&lt;No friends selected&gt;</string>
+    <string name="no_place_selected">&lt;No place selected&gt;</string>
+    <string name="pick_seattle_place">Pick a Seattle Place</string>
+    <string name="exception">Exception: %1$s</string>
+    
+    <string name="me">Here I am</string>
+    <string name="app_name">Assistant for travelers</string>
+    <string name="action_settings">Settings</string>
+    <string name="activity_map_text">Here will be map</string>
+    <string name="title_activity_menu">Main menu</string>
+    <string name="activity_menu_text">Here will be main menu</string>
+    <string name="title_activity_currency_converter">Currency converter</string>
+    <string name="currency_converter_text">Here will be currency converter</string>
+    <string name="title_activity_tourist_pois">Tourist places of interest</string>
+    <string name="tourist_pois_text">Here will be tourist POIs</string>
+    <string name="title_activity_track_position">Track position</string>
+    <string name="track_position_text">Here will be track position</string>
+    <string name="title_activity_services_around">Services around</string>
+    <string name="services_around_text">Here will be services around</string>
+    <string name="title_activity_translator">Translator</string>
+    <string name="translator_text">Here will be translator</string>
+    <string name="title_activity_costs_logger">Costs logger</string>
+    <string name="costs_logger_text">Here will be costs logger</string>
+    <string name="title_activity_information_sharing">Information sharing</string>
+    <string name="information_sharing_text">Here will be information sharing</string>
+    <string name="title_activity_more_details">More details</string>
+    <string name="more_details_text">Here will be more details</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_text">Here will be settings</string>
+    <string name="myLocation">Here I am :)</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="unknow_rate">Neznámý kurz</string>
+    <string name="unknow_rate_text">Kurz nebyl nalezen, existuje měna?</string>
+    <string name="not_available">not available</string>
+
+    <string-array name="limit_units">
+        <item>kB</item>
+        <item>MB</item>
+        <item>GB</item>
+    </string-array>
+    <string-array name="measurement_units">
+        <item>kilometer/meter</item>
+        <item>mile/foot</item>
+    </string-array>
+
+    <string name="amount_input_field_label_text">Amount:</string>
+    <string name="amount_input_field_hint">Utracená částka</string>
+    <string name="currency_spinner_label_text">Currency:</string>
+    <string name="category_spinner_label_text">Category:</string>
+    <string name="journey_spinner_label_text">Journey:</string>
+    <string name="save_button_text">Save</string>
+    <string name="plus_text">+</string>
+    <string name="new_currency_name_field_hint">Currency name</string>
+    <string name="new_currency_code_field_hint">Currency code</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="new_category_name_field_hint">Category name</string>
+    <string name="new_journey_name_field_hint">Journey name</string>
+    <string name="new_currency_dialog_title">New currency</string>
+    <string name="new_category_dialog_title">New category</string>
+    <string name="new_journey_dialog_title">New journey</string>
+    <string name="bad_amount_format">Špatný formát utracené částky</string>
+    <string name="empty_amount">Utracená částka je prázdná</string>
+    <string name="empty_currency_name">Název měny je prázdný</string>
+    <string name="empty_currency_code">Zkratka měny je prázdná</string>
+    <string name="short_currency_code">Zkratka měny musí mít 3 znaky</string>
+    <string name="empty_category_name">Název kategorie je prázdný</string>
+    <string name="empty_journey_name">Název cesty je prázdný</string>
+    <string name="input_error">Bad input</string>
+    <string name="currency_name_exists">Měna s tímto jménem již existuje</string>
+    <string name="currency_code_exists">Měna s tímto kódem již existuje</string>
+    <string name="category_name_exists">Kategorie s tímto jménem již existuje</string>
+    <string name="journey_name_exists">Cesta s tímto jménem již existuje</string>
+    <string name="journey_filter_label">Filter journey:</string>
+    <string name="category_filter_label">Filter category:</string>
+    <string name="currency_filter_label">Filter currency:</string>
+    <string name="order_by_filter_label">Order by:</string>
+    <string name="date_from_filter_label">Filter date from:</string>
+    <string name="date_to_filter_label">Filter date to:</string>
+    <string name="amount_from_filter_label">Filter amount from:</string>
+    <string name="amount_from_filter_hint">Amount from</string>
+    <string name="amount_to_filter_label">Filter amount to:</string>
+    <string name="amount_to_filter_hint">Amount to</string>
+    <string name="bad_interval_date">Počáteční hodnota intervalu data je větší než koncová</string>
+    <string name="bad_interval_amount">Počáteční hodnota intervalu částky je větší než koncová</string>
+    <string name="show_filtered">Show</string>
+    <string name="empty_amount_from">Částka od je prázdná</string>
+    <string name="empty_amount_to">Částka do je prázdná</string>
+    <string name="bad_amount_from_format">Špatný formát částky od</string>
+    <string name="bad_amount_to_format">Špatný formát částky do</string>
+    <string name="delete_button">Delete</string>
+    <string name="edit_button">Edit</string>
+    <string name="info_date">Date a time: </string>
+    <string name="info_journey">Journey: </string>
+    <string name="info_category">Category: </string>
+    <string name="info_amount">Amount: </string>
+    <string name="info_currency">Currency: </string>
+    <string name="date_delimiter">.</string>
+    <string name="time_delimiter">:</string>
+    <string name="saving_cost">Saving cost &#8230;</string>
+    <string name="cost_saved">Cost saved.</string>
+    <string name="saving_category">Saving category &#8230;</string>
+    <string name="category_saved">Category saved.</string>
+    <string name="saving_currency">Saving currency &#8230;</string>
+    <string name="currency_saved">Currency saved.</string>
+    <string name="saving_journey">Saving journey &#8230;</string>
+    <string name="journey_saved">Journey saved.</string>
+    <string name="deleting_record">Deleting cost &#8230;</string>
+    <string name="record_deleted">Cost deleted.</string>
+    <string name="date_column">Date</string>
+    <string name="time_column">Time</string>
+    <string name="journey_column">Journey</string>
+    <string name="category_column">Category</string>
+    <string name="amount_column">Amount</string>
+    <string name="currency_column">Currency</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="add_cost">Přidej výdaj</string>
+    <string name="costs_filter">Filtr výdajů</string>
+    <string name="costs_options_managing">Správa voleb výdajů</string>
+    <string name="delete_record_prompt">Opravdu chcete smazat zvolený záznam?</string>
+    <string name="information">Informace</string>
+    <string name="no_costs">Záznamník výdajů neobsahuje žádné záznamy.</string>
+    <string name="currencies">Měny</string>
+    <string name="categories">Kategorie</string>
+    <string name="journeys">Cesty</string>
+    <string name="bad_latitude">Špatný formát zeměpisné šířky</string>
+    <string name="bad_longitude">Špatný formát zeměpisné délky</string>
+
+    <string-array name="order_by">
+        <item>Category</item>
+        <item>Currency</item>
+        <item>Journey</item>
+        <item>Amount</item>
+        <item>Date</item>
+    </string-array>
+
+    <string name="title_activity_record_menu">Hlavní menu záznamníku výdajů</string>
+    <string name="title_activity_filter_record">Filtr záznamů</string>
+    <string name="title_activity_view_records">Zobrazené záznamy</string>
+    <string name="title_activity_record_edit">Editace záznamu</string>
+    <string name="title_activity_costs_options_menu">Správa voleb výdajů</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_currencies">Uložené měny</string>
+    <string name="title_activity_view_categories">Uložené kategorie</string>
+    <string name="title_activity_view_journeys">Uložené cesty</string>
+    <string name="number_of_units">Number of units</string>
+    <string name="hotels">Hotels</string>
+    <string name="no_connection_text">No internet connection</string>
+    <string name="net_error">Net error</string>
+    <string name="no_position_text">No GPS</string>
+    <string name="gps_error">GPS error</string>
+    <string name="title_activity_hotels_options">HotelsOptions</string>
+    <string name="title_activity_database_possibilities">DatabasePossibilities</string>
+    <string name="title_activity_screen">Screen</string>
+    <string name="title_activity_launcher">Launcher</string>
+    <string name="data_limit">Data limit</string>
+    <string name="data_limit_text">Reached</string>
+    <string name="title_activity_saved_places">SavedPlaces</string>
+    <string name="title_activity_go_to">GoTo</string>
+    <string name="title_activity_facebook_share">FacebookShare</string>
+
+</resources>
